@@ -1,7 +1,7 @@
 name = "StatFEMEUCLID"
 uuid = "20781104-c564-4627-b519-eb3b426232b6"
 version = "0.1.0"
-authors = ["Jan Philipp Thiele <jan-philipp.thiele@tu-braunschweig.de>","Andrea Morini"]
+authors = ["Jan Philipp Thiele <jan-philipp.thiele@tu-braunschweig.de>", "Andrea Morini"]
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -11,15 +11,18 @@ StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 UMBridge = "0ac74fe0-b753-4e62-be71-04a8383fbbef"
 
 [compat]
+Aqua = "0.8.15"
 Distributions = "0.25.123"
 PolyChaos = "1.1.0"
 Random = "1.10.0"
 StatsBase = "0.34.10"
+Test = "1.10"
 UMBridge = "1.1.7"
 julia = "1.10"
 
 [extras]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test"]
+test = ["Test", "Aqua"]
