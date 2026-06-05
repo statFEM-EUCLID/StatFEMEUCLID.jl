@@ -38,10 +38,8 @@ end
         fem_model = UMBridge.HTTPModel("Bar1D.FEM", server_url)
 
         lognormal_dist = create_lognormal_distribution(μ_E, σ_E)
-        sample_MC = apply(p1) do
-            apply(p2) do
-                StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = lognormal_dist, rng = rng)
-            end
+        sample_MC = apply((p1, p2)) do
+            StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = lognormal_dist, rng = rng)
         end
         mu, _ = StatFEMEUCLID.Sampling.compute_statistics(sample_MC)
         @test isapprox(mu[end], 20, atol = 0.05)

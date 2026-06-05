@@ -51,7 +51,9 @@ Optional keyword arguments:
 function sample_FEM(fem_model::HTTPModel, n_samples::Int; sample_distribution::UnivariateDistribution, rng = default_rng(), solution_index = 1, config = empty_config())::UnivariateFEMSample
     uniform_sample = rand(rng, n_samples)
     fem_sample = draw_FEM_samples(fem_model, quantile(sample_distribution, uniform_sample), solution_index = solution_index, config = config)
-    return UnivariateFEMSample{valtype(params(sample_distribution))}(uniform_sample, sample_distribution, fem_sample)
+    pars = params(sample_distribution)
+    DT = pars isa Tuple ? eltype(pars) : valtype(pars)
+    return UnivariateFEMSample{DT}(uniform_sample, sample_distribution, fem_sample)
 end
 
 
