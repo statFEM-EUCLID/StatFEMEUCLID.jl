@@ -16,6 +16,7 @@ using StatsBase: mean, std
 using UMBridge: HTTPModel, model_output_sizes
 using Distributions: Normal, UnivariateDistribution, quantile, params
 using Random: default_rng
+using Mocking: @mock
 
 """
     struct UnivariateFEMSample{T<:Real}
@@ -30,9 +31,9 @@ struct UnivariateFEMSample{T <: Real}
 end
 
 function draw_FEM_samples(fem_model::HTTPModel, parameter_sample::Vector{Float64}; solution_index = 1, config = empty_config())
-    samples = zeros(length(parameter_sample), model_output_sizes(fem_model)[1])
+    samples = zeros(length(parameter_sample), @mock(model_output_sizes(fem_model))[1])
     for i in eachindex(parameter_sample)
-        samples[i, :] = evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config)
+        samples[i, :] .= evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config)
     end
     return samples
 end

@@ -2,8 +2,10 @@ using StatFEMEUCLID
 using Test
 using Aqua
 using Mocking
-using StatFEMEUCLID.PCE.Distributions
-using StatFEMEUCLID.FEMClient.UMBridge
+using Distributions
+using UMBridge
+using UMBridge: HTTPModel
+using Random
 
 Aqua.test_all(StatFEMEUCLID)
 
@@ -17,19 +19,29 @@ end
 
 @testset "StatFEMEUCLID.jl" begin
     @testset "1DBar Example" begin
-        function solution(x, J, A, Y)
-            return @. J / (A * Y) * x 
+        original_world = Base.get_world_counter()
+##
+        N = 50
+        function solution(E, F = 800, A = 20)
+            return [LinRange( 0, 100, N) *  F / (A * E)]
         end
-        @patch UMBridge.evaluate(model, input, config=Dict()) = solution(input...)
-        rng = MersenneTwister(2020)  #fixed seed for comparability between runs
+        p1 = @patch UMBridge.evaluate(model, input, config=Dict()) = solution(only(input))
+        p2 = @patch UMBridge.model_output_sizes(model::HTTPModel, config = Dict()) = (N,)
 
+        rng = MersenneTwister(2020)  #fixed seed for comparability between runs
         μ_E = 200.0
         σ_E = 10.0
-        n_MonteCarlo = 100
+        n_MonteCarlo = 1000
+        server_url = "http://localhost:4343"
     
         fem_model = UMBridge.HTTPModel("Bar1D.FEM", server_url)
         
         lognormal_dist = create_lognormal_distribution(μ_E, σ_E)
-        sample_MC = StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = lognormal_dist, rng = rng)
+        sample_MC = apply((p1, p2)) do
+            StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = lognormal_dist, rng = rng)
+        end
+        mu, _ = StatFEMEUCLID.Sampling.compute_statistics(sample_MC)
+        @test isapprox(mu[end], 20, atol = 0.05) 
+##
     end
 end
