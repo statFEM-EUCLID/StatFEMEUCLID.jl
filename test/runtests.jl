@@ -19,7 +19,6 @@ end
 
 @testset "StatFEMEUCLID.jl" begin
     @testset "1DBar Example" begin
-        original_world = Base.get_world_counter()
 ##
         N = 50
         function solution(E, F = 800, A = 20)
