@@ -1,9 +1,0 @@
-[deps]
-CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
-Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-StatFEMEUCLID = "20781104-c564-4627-b519-eb3b426232b6"
-UMBridge = "0ac74fe0-b753-4e62-be71-04a8383fbbef"
-
-[sources]
-StatFEMEUCLID = {path = ".."}
