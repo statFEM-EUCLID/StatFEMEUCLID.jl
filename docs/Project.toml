@@ -5,5 +5,9 @@ Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 ExampleJuggler = "3bbe58f8-ed81-4c4e-a134-03e85fcf4a1a"
 Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
 PolyChaos = "8d666b04-775d-5f6e-b778-5ac7c70f65a3"
+StatFEMEUCLID = "20781104-c564-4627-b519-eb3b426232b6"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 UMBridge = "0ac74fe0-b753-4e62-be71-04a8383fbbef"
+
+[sources]
+StatFEMEUCLID = {path = ".."}
