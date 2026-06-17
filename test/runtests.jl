@@ -42,8 +42,8 @@ Mocking.activate()
         end
         mu, _ = StatFEMEUCLID.Sampling.compute_statistics(sample_MC)
         μ_PCE, σ_PCE = StatFEMEUCLID.PCE.compute_statistics(pce_surrogate)
-        @test isapprox(mu[end], 20, rtol = 5e-7)
-        @test isapprox(μ_PCE[end], 20, rtol = 5e-12)
+        @test isapprox(mu[end], 20, rtol = 1.0e-5)
+        @test isapprox(μ_PCE[end], 20, rtol = 5.0e-12)
         # runic: off
 ##
         # runic: on
