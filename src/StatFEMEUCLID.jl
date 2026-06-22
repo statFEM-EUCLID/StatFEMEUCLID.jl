@@ -6,5 +6,6 @@ module StatFEMEUCLID
 include("FEMClient.jl")
 include("Sampling.jl")
 include("PCE.jl")
+include("StatFEM.jl")
 
 end

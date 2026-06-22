@@ -46,8 +46,8 @@ Keyword arguments:
 - `solution_index`: For a vector valued unknown, return the unknown at this index (can be `:` for the full solution)
 - `config`: Dict{String,Any} describing optional parameters for the fem_model
 """
-function evaluate_fem_model(fem_model::HTTPModel, parameter::Float64; solution_index = 1, config::Dict{String, Any} = empty_config())
-    return evaluate_fem_model(fem_model, [parameter], solution_index = solution_index, config = config)
+function evaluate_fem_model(fem_model::HTTPModel, parameter::Float64; solution_index = 1, config::Dict{String, Any} = empty_config(),extra_params::Vector{Float64}=[])
+    return evaluate_fem_model(fem_model, [parameter], solution_index = solution_index, config = config,extra_params=extra_params)
 end
 
 
@@ -59,13 +59,28 @@ Keyword arguments:
 - `solution_index`: For a vector valued unknown, return the unknown at this index (can be `:` for the full solution)
 - `config`: Dict{String,Any} describing optional parameters for the fem_model
 """
-function evaluate_fem_model(fem_model::HTTPModel, parameters::Vector{Float64}; solution_index = 1, config::Dict{String, Any} = empty_config())
-    eval_result = flatten_if_needed(evaluate(fem_model, [parameters], config))
+function evaluate_fem_model(fem_model::HTTPModel, parameters::Vector{Float64}; solution_index = 1, config::Dict{String, Any} = empty_config(),extra_params::Vector{Float64}=[])
+    full_parameters = [parameters]
+    if !isempty(extra_params)
+        full_parameters = [parameters,extra_params]
+    end 
+    eval_result = flatten_if_needed(evaluate(fem_model, full_parameters, config))
 
     if solution_index == Colon()
         return Float64.(reduce(vcat, eval_result))
     end
     return Float64.(eval_result[solution_index])
+end
+
+function evaluate_projection(projection_model::HTTPModel,sensor_points::Vector{Vector{T}},n_dofs::Int64) where T <: Real
+    result = zeros(length(sensor_points),n_dofs)
+    for i in eachindex(sensor_points)
+        request_result = flatten_if_needed(evaluate(projection_model,[sensor_points[i]]))
+        global_cell_ids = Int64.(request_result[1])
+        cell_basisvalues = Float64.(request_result[2])
+        result[i,global_cell_ids] = cell_basisvalues
+    end
+    return result
 end
 
 end
