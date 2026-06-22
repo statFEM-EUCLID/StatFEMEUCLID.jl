@@ -16,6 +16,7 @@ using StatsBase: mean, std
 using UMBridge: HTTPModel, model_output_sizes
 using Distributions: Normal, UnivariateDistribution, quantile, params
 using Random: default_rng
+using Mocking: @mock
 
 """
     struct UnivariateFEMSample{T<:Real}
@@ -30,9 +31,9 @@ struct UnivariateFEMSample{T <: Real}
 end
 
 function draw_FEM_samples(fem_model::HTTPModel, parameter_sample::Vector{Float64}; solution_index = 1, config = empty_config())
-    samples = zeros(length(parameter_sample), model_output_sizes(fem_model)[1])
+    samples = zeros(length(parameter_sample), @mock(model_output_sizes(fem_model))[1])
     for i in eachindex(parameter_sample)
-        samples[i, :] = evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config)
+        samples[i, :] .= evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config)
     end
     return samples
 end
@@ -50,7 +51,9 @@ Optional keyword arguments:
 function sample_FEM(fem_model::HTTPModel, n_samples::Int; sample_distribution::UnivariateDistribution, rng = default_rng(), solution_index = 1, config = empty_config())::UnivariateFEMSample
     uniform_sample = rand(rng, n_samples)
     fem_sample = draw_FEM_samples(fem_model, quantile(sample_distribution, uniform_sample), solution_index = solution_index, config = config)
-    return UnivariateFEMSample{valtype(params(sample_distribution))}(uniform_sample, sample_distribution, fem_sample)
+    pars = params(sample_distribution)
+    DT = pars isa Tuple ? eltype(pars) : valtype(pars)
+    return UnivariateFEMSample{DT}(uniform_sample, sample_distribution, fem_sample)
 end
 
 

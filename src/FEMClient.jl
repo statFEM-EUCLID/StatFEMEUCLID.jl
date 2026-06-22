@@ -12,6 +12,7 @@ module FEMClient
 
 
 using UMBridge: evaluate, HTTPModel
+using Mocking: @mock
 
 export evaluate_fem_model
 
@@ -60,7 +61,7 @@ Keyword arguments:
 - `config`: Dict{String,Any} describing optional parameters for the fem_model
 """
 function evaluate_fem_model(fem_model::HTTPModel, parameters::Vector{Float64}; solution_index = 1, config::Dict{String, Any} = empty_config())
-    eval_result = flatten_if_needed(evaluate(fem_model, [parameters], config))
+    eval_result = flatten_if_needed(@mock(evaluate(fem_model, [parameters], config)))
 
     if solution_index == Colon()
         return Float64.(reduce(vcat, eval_result))
