@@ -75,8 +75,8 @@ end
 # which listens on `http://localhost:4242` by default.
 
 function main(;
-        μ_E = 200.0,
-        σ_E = 10.0,
+        μ_F = 800.0,
+        σ_F = 0.1,
         n_MonteCarlo = 1000,
         n_PCE = 50,
         server_url = "http://localhost:4343",
@@ -86,12 +86,12 @@ function main(;
     rng = MersenneTwister(2020)  #fixed seed for comparability between runs
 
     fem_model = UMBridge.HTTPModel("Bar1D.FEM", server_url)
-    lognormal_dist = create_lognormal_distribution(μ_E, σ_E)
+    dist = Normal(μ_F, σ_F)
 
     # Now we perform sampling of the black box through the `Sampling` submodule
 
-    sample_MC = StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = lognormal_dist, rng = rng)
-    sample_PCE = StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_PCE, sample_distribution = lognormal_dist, rng = rng)
+    sample_MC = StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_MonteCarlo, sample_distribution = dist, rng = rng)
+    sample_PCE = StatFEMEUCLID.Sampling.sample_FEM(fem_model, n_PCE, sample_distribution = dist, rng = rng)
 
     # For the Monto Carlo sample we directly compute the empirical standard deviation
     _, σ_MC = StatFEMEUCLID.Sampling.compute_statistics(sample_MC)
