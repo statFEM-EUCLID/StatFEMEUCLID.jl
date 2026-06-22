@@ -9,14 +9,15 @@ This submodule provides all the functionality for building a PCE surrogate from 
 module PCE
 
 using ..Sampling: UnivariateFEMSample
+import ..Sampling: compute_statistics
+
+using Statistics
+import Statistics: mean, var, cov
 
 using PolyChaos: AbstractCanonicalOrthoPoly, GaussOrthoPoly, evaluate, computeSP2
 using Distributions: quantile, UnivariateDistribution, Normal
 
 export PolyChaosExpansion
-export mean
-export covariance
-export compute_statistics
 
 """
     PolyChaosExpansion{T<: Real}
@@ -66,7 +67,7 @@ end
 
 Compute mean values of the given PCE
 """
-function mean(pce::PolyChaosExpansion{T})::AbstractVector{T} where {T <: Real}
+function Statistics.mean(pce::PolyChaosExpansion{T})::AbstractVector{T} where {T <: Real}
     return vec(pce.coefficients[1, :])
 end
 
@@ -86,11 +87,11 @@ function var(pce::PolyChaosExpansion{T})::AbstractVector{T} where {T <: Real}
 end
 
 """
-    covariance(pce::PolyChaosExpansion{T})::AbstractMatrix{T} where T <: Real
+    cov(pce::PolyChaosExpansion{T})::AbstractMatrix{T} where T <: Real
 
-Compute covariance matrix of the given PCE
+Compute cov matrix of the given PCE
 """
-function covariance(pce::PolyChaosExpansion{T})::AbstractMatrix{T} where {T <: Real}
+function Statistics.cov(pce::PolyChaosExpansion{T})::AbstractMatrix{T} where {T <: Real}
     normsq = computeSP2(pce.orthogonal_polynomials)
     result = zeros(T, size(pce.coefficients)[2], size(pce.coefficients)[2])
     for i in eachindex(normsq)[2:end]
