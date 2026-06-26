@@ -51,7 +51,7 @@ end
 TBW
 """
 function covariance(sensor_set::EqualSensorSet{T})::AbstractMatrix{T} where T
-    return Matrix((sensor_set.σ)*I(size(sensor_set)))
+    return Matrix((sensor_set.σ ^ 2)*I(size(sensor_set)))
 end
 
 """
@@ -94,13 +94,13 @@ end
 TBW
 """
 function posterior_mean(sensor_set::EqualSensorSet{T},measurements,pce) where T
-    n_repetitions = length(measurements)
+    n_repetitions = ndims(measurements) == 1 ? 1 : size(measurements,2)
     C_e = covariance(sensor_set)./n_repetitions
     H = sensor_set.projection
     C_u = corrected_pce_covariance(pce)
     
     #mean measurements
-    mean_measurements = vec(sum(measurements;dims=2))/n_repetitions
+    mean_measurements = ndims(measurements) == 1 ? vec(measurements) : vec(sum(measurements;dims=2))/n_repetitions
 
     K = calculate_Kalman_gain(H,C_u,C_e)
     posterior_mean = calculate_posterior_mean(mean_measurements,H,K,mean(pce))
