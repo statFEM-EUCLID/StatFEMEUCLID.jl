@@ -194,8 +194,8 @@ function plot_sensors(grid, sensor_points::Vector{Vector{Float64}})
         x[i] = sensor_points[i][1]
         y[i] = sensor_points[i][2]
     end
-    customplot!(ctx) do ax
-        CairoMakie.scatter!(ax, sensor_points[])
+    customplot!(sensorvis) do ax
+        CairoMakie.scatter!(ax, x, y)
     end
     return sensorvis
 end
