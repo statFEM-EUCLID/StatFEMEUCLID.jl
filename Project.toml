@@ -1,7 +1,7 @@
 name = "StatFEMEUCLID"
 uuid = "20781104-c564-4627-b519-eb3b426232b6"
-version = "0.1.0"
-authors = ["Jan Philipp Thiele <jan-philipp.thiele@tu-braunschweig.de>", "Andrea Morini"]
+version = "0.2.0"
+authors = ["Jan Philipp Thiele <jan-philipp.thiele@tu-braunschweig.de>", "Andrea Morini", "Simon Christ"]
 
 [workspace]
 projects = ["docs"]
