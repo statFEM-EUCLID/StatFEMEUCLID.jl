@@ -18,6 +18,7 @@ using PolyChaos: AbstractCanonicalOrthoPoly, GaussOrthoPoly, evaluate, computeSP
 using Distributions: quantile, UnivariateDistribution, Normal
 
 export PolyChaosExpansion
+export mean
 
 """
     PolyChaosExpansion{T<: Real}
@@ -77,7 +78,7 @@ end
 
 Compute variance of the given PCE
 """
-function var(pce::PolyChaosExpansion{T})::AbstractVector{T} where {T <: Real}
+function Statistics.var(pce::PolyChaosExpansion{T})::AbstractVector{T} where {T <: Real}
     normsq = computeSP2(pce.orthogonal_polynomials)
     result = zeros(T, size(pce.coefficients)[2])
     for i in eachindex(normsq)[2:end]
