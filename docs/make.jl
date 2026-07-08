@@ -14,7 +14,7 @@ function make_all(; with_examples::Bool = false, modules = :all, run_examples::B
         example_dir = joinpath(@__DIR__, "..", "examples")
 
         if modules === :all
-            modules = readdir(example_dir)
+            modules = filter(x -> endswith(x, ".jl"), readdir(example_dir))
         end
 
         cleanexamples()
@@ -33,10 +33,13 @@ function make_all(; with_examples::Bool = false, modules = :all, run_examples::B
         doctest = true,
         pages = [
             "Home" => "index.md"
+            "UMBridge interfaces" => "umbridge_interfaces.md"
             "Submodules" => [
                 "FEMClient" => "submodules/femclient.md"
                 "Sampling" => "submodules/sampling.md"
                 "PCE" => "submodules/pce.md"
+                "SensorSets" => "submodules/sensorsets.md"
+                "StatFEM" => "submodules/statfem.md"
             ]
             "Examples" => module_examples
         ],

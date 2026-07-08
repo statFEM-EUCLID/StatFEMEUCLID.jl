@@ -17,6 +17,6 @@ Order = [:type]
 ## Functions
 ```@docs
 compute_statistics
-covariance
+cov
 mean
 ```

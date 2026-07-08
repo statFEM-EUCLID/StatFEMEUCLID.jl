@@ -30,10 +30,10 @@ struct UnivariateFEMSample{T <: Real}
     fem_sample::AbstractMatrix{T}
 end
 
-function draw_FEM_samples(fem_model::HTTPModel, parameter_sample::Vector{Float64}; solution_index = 1, config = empty_config())
+function draw_FEM_samples(fem_model::HTTPModel, parameter_sample::Vector{Float64}; solution_index = 1, config = empty_config(), extra_params::Vector{Float64} = Float64[])
     samples = zeros(length(parameter_sample), @mock(model_output_sizes(fem_model))[1])
     for i in eachindex(parameter_sample)
-        samples[i, :] .= evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config)
+        samples[i, :] .= evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config, extra_params = extra_params)
     end
     return samples
 end
@@ -48,9 +48,9 @@ Optional keyword arguments:
 - `solution_index`: For a vector valued unknown, return the unknown at this index (can be `:` for the full solution)
 - `config`: Dict{String,Any} describing optional parameters for the fem_model
 """
-function sample_FEM(fem_model::HTTPModel, n_samples::Int; sample_distribution::UnivariateDistribution, rng = default_rng(), solution_index = 1, config = empty_config())::UnivariateFEMSample
+function sample_FEM(fem_model::HTTPModel, n_samples::Int; sample_distribution::UnivariateDistribution, rng = default_rng(), solution_index = 1, config = empty_config(), extra_params::Vector{Float64} = Float64[])::UnivariateFEMSample
     uniform_sample = rand(rng, n_samples)
-    fem_sample = draw_FEM_samples(fem_model, quantile(sample_distribution, uniform_sample), solution_index = solution_index, config = config)
+    fem_sample = draw_FEM_samples(fem_model, quantile(sample_distribution, uniform_sample), solution_index = solution_index, config = config, extra_params = extra_params)
     pars = params(sample_distribution)
     DT = pars isa Tuple ? eltype(pars) : valtype(pars)
     return UnivariateFEMSample{DT}(uniform_sample, sample_distribution, fem_sample)
