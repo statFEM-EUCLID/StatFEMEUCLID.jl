@@ -48,9 +48,14 @@ using GridVisualize
 using CSV, DataFrames
 using PolyChaos
 using LinearAlgebra: diag
+# If the forward model does not provide a projection (see below) we can use the StatFEMEUCLID extension enabled by loading ExtendableFEMBase
+using ExtendableFEMBase
 
 # With `server_url` you can point to a different UMBridge server implementing the model
-# the default is what is provided by the Ferrite.jl-based implementation [here](https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/)
+# the default is what is provided by the Ferrite.jl-based implementation [here](https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/).
+# An alternative is provided by the Kratos-based implementation [here](https://github.com/statFEM-EUCLID/HolePlate2D_Kratos.py/)
+# with `server_url="http://localhost:4242`.
+# Note that the Kratos implementation only provides the linear elasticity model, so it can not be used for the data generation.
 
 function main(;
         μ_F = 0.5,
@@ -71,7 +76,10 @@ function main(;
     # The ordering should follow the ordering given by the mesh file, otherwise the plotting will produce wrong results.
     # The consistent option has the server provide this mapping.
     projection_model = UMBridge.HTTPModel(model_name * ".projection", server_url)
-    n_dofs = UMBridge.model_output_sizes(fem_model)[1]
+
+    # For calculating the projection on the client side we have to provide the grid
+    # but we also need it for plotting, so we load it early
+    grid = ExtendableGrids.simplexgrid_from_gmsh("Example201_mesh.msh", Tc = Float64, Ti = Int64)
 
     # Since some of our example servers can solve for more than one material model
     # we now need to specify this in a configuration.
@@ -105,7 +113,15 @@ function main(;
     sensor_points = [Vector{Float64}(row) for row in eachrow(dataframe_sensors)]
 
     sensor_set = EqualSensorSet(sensor_points, σ_sensor)
-    calculate_projection_matrix(sensor_set, projection_model, n_dofs)
+
+    # If your forward model provides the projection you build the matrix with the following commands
+    # ```
+    # n_dofs = UMBridge.model_output_sizes(fem_model)[1]
+    # calculate_projection_matrix(sensor_set, projection_model, n_dofs)
+    # ```
+
+    # Otherwise the extension provides (needs `using ExtendableFEMBase`)
+    calculate_projection_matrix(sensor_set, grid)
 
     # 3 Read in (synthetic) measurements
     dataframe_measurements = CSV.read("Example201_measurements.csv", DataFrame)
@@ -124,8 +140,6 @@ function main(;
 
     # Finally, we want to plot the sensor locations as well as
     # the prior and posterior along the bottom boundary
-    # For both we need to read in the grid on the client side
-    grid = ExtendableGrids.simplexgrid_from_gmsh("Example201_mesh.msh")
     # Plot of sensor points and mesh
     sensorvis = plot_sensors(grid, sensor_points)
 
