@@ -63,11 +63,11 @@ function main(;
         n_PCE = 30,
         E = 2.7,
         ν = 0.35,
-        σ_sensor = 5e-1,
+        σ_sensor = 0.5,
         server_url = "http://localhost:4232",
     )
 
-    rng = MersenneTwister(2030)  #fixed seed for comparability between runs
+    rng = MersenneTwister(2530)  #fixed seed for comparability between runs
 
     # As in Example101 we start by defining UMBridge HTML models for querying the forward model
     model_name = "HolePlate2D"
@@ -221,7 +221,7 @@ end
 # i.e. the Ferrite.jl-based implementation [here](https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/)
 function generate_synthetic_data(;
         F = 0.5,
-        σ_sensor = 5e-1,
+        σ_sensor = 0.5,
         server_url = "http://localhost:4232"
     )
 
