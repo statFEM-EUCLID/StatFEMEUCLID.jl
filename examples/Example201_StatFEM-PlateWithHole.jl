@@ -63,7 +63,7 @@ function main(;
         n_PCE = 30,
         E = 2.7,
         ν = 0.35,
-        σ_sensor = 0.5,
+        σ_sensor = 5e-1,
         server_url = "http://localhost:4232",
     )
 
@@ -221,7 +221,7 @@ end
 # i.e. the Ferrite.jl-based implementation [here](https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/)
 function generate_synthetic_data(;
         F = 0.5,
-        σ_sensor = 0.5,
+        σ_sensor = 5e-1,
         server_url = "http://localhost:4232"
     )
 
@@ -271,7 +271,7 @@ function generate_synthetic_data(;
 
     # Finally, we sample a Gaussian noise at the sensor locations
     # and perturb the measurement data
-    rng = MersenneTwister(1530)
+    rng = MersenneTwister(2530)
     noise_distribution = Normal(0.0, σ_sensor)
     noise_x = rand(rng, noise_distribution, n_sen)
     noise_y = rand(rng, noise_distribution, n_sen)
