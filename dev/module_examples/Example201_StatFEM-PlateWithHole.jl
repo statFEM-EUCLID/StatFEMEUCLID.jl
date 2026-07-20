@@ -67,7 +67,7 @@ function main(;
         server_url = "http://localhost:4232",
     )
 
-    rng = MersenneTwister(2030)  #fixed seed for comparability between runs
+    rng = MersenneTwister(2530)  #fixed seed for comparability between runs
 
     # As in Example101 we start by defining UMBridge HTML models for querying the forward model
     model_name = "HolePlate2D"
@@ -271,7 +271,7 @@ function generate_synthetic_data(;
 
     # Finally, we sample a Gaussian noise at the sensor locations
     # and perturb the measurement data
-    rng = MersenneTwister(1530)
+    rng = MersenneTwister(2530)
     noise_distribution = Normal(0.0, σ_sensor)
     noise_x = rand(rng, noise_distribution, n_sen)
     noise_y = rand(rng, noise_distribution, n_sen)
