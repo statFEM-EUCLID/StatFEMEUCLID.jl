@@ -31,10 +31,7 @@ using LinearAlgebra: diag</code></pre><p>If the forward model does not provide a
         rng = rng,
         config = LE_material_config,
         extra_params = [ν, E]
-    )</code></pre><p>For statFEM we need three components, a PCE surrogate, measurement data and a projection matrix H from our solution space (dofs) to the locations of the sensors where the measurements were taken.</p><p>1 PCE surrogate, see Example101</p><pre><code class="language-julia hljs">    ux_pce_surrogate = PolyChaosExpansion(ux_prior_sample, polynomials = GaussOrthoPoly(4))</code></pre><p>2 Sensor points from file + projection matrix</p><pre><code class="language-julia hljs">    dataframe_sensors = CSV.read(&quot;Example201_sensors.csv&quot;, DataFrame)
-    sensor_points = [Vector{Float64}(row) for row in eachrow(dataframe_sensors)]
-
-    sensor_set = EqualSensorSet(sensor_points, σ_sensor)</code></pre><p>If your forward model provides the projection you build the matrix with the following commands</p><pre><code class="nohighlight hljs">n_dofs = UMBridge.model_output_sizes(fem_model)[1]
+    )</code></pre><p>For statFEM we need three components, a PCE surrogate, measurement data and a projection matrix H from our solution space (dofs) to the locations of the sensors where the measurements were taken.</p><p>1 PCE surrogate, see Example101</p><pre><code class="language-julia hljs">    ux_pce_surrogate = PolyChaosExpansion(ux_prior_sample, polynomials = GaussOrthoPoly(4))</code></pre><p>2 Sensor points from file + projection matrix</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example201_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)</code></pre><p>If your forward model provides the projection you build the matrix with the following commands</p><pre><code class="nohighlight hljs">n_dofs = UMBridge.model_output_sizes(fem_model)[1]
 calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>Otherwise the extension provides (needs <code>using ExtendableFEMBase</code>)</p><pre><code class="language-julia hljs">    calculate_projection_matrix(sensor_set, grid)</code></pre><p>3 Read in (synthetic) measurements</p><pre><code class="language-julia hljs">    dataframe_measurements = CSV.read(&quot;Example201_measurements.csv&quot;, DataFrame)
     measurements = [Vector{Float64}(row) for row in eachrow(dataframe_measurements)]
 
@@ -42,9 +39,9 @@ calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p
     for i in eachindex(measurements)
         ux_measurements[i] = measurements[i][1]
     end</code></pre><p>With all components in place, we can now calculate the posterior statistics, i.e. the vector of nodal mean values and covariance matrix.</p><pre><code class="language-julia hljs">    ux_posterior, C_ux_posterior = posterior_statistics(sensor_set, ux_measurements, ux_pce_surrogate)
-    σ_ux_posterior = sqrt.(diag(C_ux_posterior))</code></pre><p>Finally, we want to plot the sensor locations as well as the prior and posterior along the bottom boundary Plot of sensor points and mesh</p><pre><code class="language-julia hljs">    sensorvis = plot_sensors(grid, sensor_points)
+    σ_ux_posterior = sqrt.(diag(C_ux_posterior))</code></pre><p>Finally, we want to plot the sensor locations as well as the prior and posterior along the bottom boundary Plot of sensor points and mesh</p><pre><code class="language-julia hljs">    sensorvis = plot_sensors(grid, sensor_set.locations)
 
-    displt = plot_displacements_along_bottom_boundary(grid, sensor_points, measurements, ux_pce_surrogate, ux_posterior, σ_ux_posterior)
+    displt = plot_displacements_along_bottom_boundary(grid, sensor_set.locations, measurements, ux_pce_surrogate, ux_posterior, σ_ux_posterior)
 
     return sensorvis, displt
 end</code></pre><p>This function plots the measurements as well as prior and posterior displacements with confidence intervals on the line along the bottom boundary of the domain.</p><pre><code class="language-julia hljs">function plot_displacements_along_bottom_boundary(grid, sensor_points, measurements, pce_surrogate, μ_posterior, σ_posterior)
@@ -103,25 +100,13 @@ end</code></pre><p>This function generates the synthetic data based on a Mooney-
         &quot;n_MR&quot; =&gt; 1,
         &quot;n_VOL&quot; =&gt; 1
     )
-    n_dofs = UMBridge.model_output_sizes(fem_model)[1]</code></pre><p>Since we solve with the exact mean traction force, we don&#39;t have to sample and can directly evaluate the forward model once.</p><pre><code class="language-julia hljs">    u_truth = zeros(n_dofs, 2)
-    u_truth_full = evaluate_fem_model(
-        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
-    )
-    u_truth[:, 1] = u_truth_full[1:n_dofs]
-    u_truth[:, 2] = u_truth_full[(n_dofs + 1):end]</code></pre><p>Then, we read in the sensor locations and obtain the projection matrix</p><pre><code class="language-julia hljs">    dataframe_sensors = CSV.read(&quot;Example201_sensors.csv&quot;, DataFrame)
-    sensor_points = [Vector{Float64}(row) for row in eachrow(dataframe_sensors)]
-    sensor_set = EqualSensorSet(sensor_points, σ_sensor)
-    calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>and project the solution onto the sensor points</p><pre><code class="language-julia hljs">    n_sen = size(sensor_set)
-    u_measured = zeros(n_sen, 2)
-    u_measured[:, 1] = sensor_set.projection * u_truth[:, 1]
-    u_measured[:, 2] = sensor_set.projection * u_truth[:, 2]</code></pre><p>Finally, we sample a Gaussian noise at the sensor locations and perturb the measurement data</p><pre><code class="language-julia hljs">    rng = MersenneTwister(2530)
-    noise_distribution = Normal(0.0, σ_sensor)
-    noise_x = rand(rng, noise_distribution, n_sen)
-    noise_y = rand(rng, noise_distribution, n_sen)
-    u_measured[:, 1] += noise_x
-    u_measured[:, 2] += noise_y</code></pre><p>before writing the result to file.</p><pre><code class="language-julia hljs">    dataframe_measurements = DataFrame(u_x = u_measured[:, 1], u_y = u_measured[:, 2])
+    n_dofs = UMBridge.model_output_sizes(fem_model)[1]</code></pre><p>Since we solve with the exact mean traction force, we don&#39;t have to sample and can directly evaluate the forward model once.</p><pre><code class="language-julia hljs">    u_truth = reshape(
+        evaluate_fem_model(
+            fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+        ), n_dofs, 2
+    )</code></pre><p>Then, we read in the sensor locations and obtain the projection matrix</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example201_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)
+    calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>and project the solution onto the sensor points</p><pre><code class="language-julia hljs">    u_measured = project(sensor_set, u_truth)</code></pre><p>Finally, we apply a Gaussian noise to the projected measurements</p><pre><code class="language-julia hljs">    apply_noise!(sensor_set, u_measured; rng = MersenneTwister(2530))</code></pre><p>before writing the result to file.</p><pre><code class="language-julia hljs">    dataframe_measurements = DataFrame(u_x = u_measured[:, 1], u_y = u_measured[:, 2])
     return CSV.write(&quot;Example201_measurements.csv&quot;, dataframe_measurements)
 end
 
-
-end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Example101_Sampling1DBarUnderTension/">« Example101_Sampling1DBarUnderTension</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 20 July 2026 11:58">Monday 20 July 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Example101_Sampling1DBarUnderTension/">« Example101_Sampling1DBarUnderTension</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 22 July 2026 12:12">Wednesday 22 July 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
