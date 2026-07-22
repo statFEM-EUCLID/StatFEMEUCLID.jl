@@ -109,10 +109,7 @@ function main(;
     ux_pce_surrogate = PolyChaosExpansion(ux_prior_sample, polynomials = GaussOrthoPoly(4))
 
     # 2 Sensor points from file + projection matrix
-    dataframe_sensors = CSV.read("Example201_sensors.csv", DataFrame)
-    sensor_points = [Vector{Float64}(row) for row in eachrow(dataframe_sensors)]
-
-    sensor_set = EqualSensorSet(sensor_points, σ_sensor)
+    sensor_set = CSV.read("Example201_sensors.csv", EqualSensorSet{Float64}, σ_sensor)
 
     # If your forward model provides the projection you build the matrix with the following commands
     # ```
@@ -141,9 +138,9 @@ function main(;
     # Finally, we want to plot the sensor locations as well as
     # the prior and posterior along the bottom boundary
     # Plot of sensor points and mesh
-    sensorvis = plot_sensors(grid, sensor_points)
+    sensorvis = plot_sensors(grid, sensor_set.locations)
 
-    displt = plot_displacements_along_bottom_boundary(grid, sensor_points, measurements, ux_pce_surrogate, ux_posterior, σ_ux_posterior)
+    displt = plot_displacements_along_bottom_boundary(grid, sensor_set.locations, measurements, ux_pce_surrogate, ux_posterior, σ_ux_posterior)
 
     return sensorvis, displt
 end
@@ -246,42 +243,28 @@ function generate_synthetic_data(;
     )
     n_dofs = UMBridge.model_output_sizes(fem_model)[1]
 
-
     # Since we solve with the exact mean traction force,
     # we don't have to sample and can directly evaluate the
     # forward model once.
-    u_truth = zeros(n_dofs, 2)
-    u_truth_full = evaluate_fem_model(
-        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+    u_truth = reshape(
+        evaluate_fem_model(
+            fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+        ), n_dofs, 2
     )
-    u_truth[:, 1] = u_truth_full[1:n_dofs]
-    u_truth[:, 2] = u_truth_full[(n_dofs + 1):end]
 
     # Then, we read in the sensor locations and obtain the projection matrix
-    dataframe_sensors = CSV.read("Example201_sensors.csv", DataFrame)
-    sensor_points = [Vector{Float64}(row) for row in eachrow(dataframe_sensors)]
-    sensor_set = EqualSensorSet(sensor_points, σ_sensor)
+    sensor_set = CSV.read("Example201_sensors.csv", EqualSensorSet{Float64}, σ_sensor)
     calculate_projection_matrix(sensor_set, projection_model, n_dofs)
 
     # and project the solution onto the sensor points
-    n_sen = size(sensor_set)
-    u_measured = zeros(n_sen, 2)
-    u_measured[:, 1] = sensor_set.projection * u_truth[:, 1]
-    u_measured[:, 2] = sensor_set.projection * u_truth[:, 2]
+    u_measured = project(sensor_set, u_truth)
 
-    # Finally, we sample a Gaussian noise at the sensor locations
-    # and perturb the measurement data
-    rng = MersenneTwister(2530)
-    noise_distribution = Normal(0.0, σ_sensor)
-    noise_x = rand(rng, noise_distribution, n_sen)
-    noise_y = rand(rng, noise_distribution, n_sen)
-    u_measured[:, 1] += noise_x
-    u_measured[:, 2] += noise_y
+    # Finally, we apply a Gaussian noise to the projected measurements
+    apply_noise!(sensor_set, u_measured; rng = MersenneTwister(2530))
 
     # before writing the result to file.
     dataframe_measurements = DataFrame(u_x = u_measured[:, 1], u_y = u_measured[:, 2])
     return CSV.write("Example201_measurements.csv", dataframe_measurements)
 end
-
 
 end

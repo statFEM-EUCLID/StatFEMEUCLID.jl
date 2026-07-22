@@ -10,6 +10,8 @@ where all sensors have the same measurement accuracy.
 """
 module SensorSets
 import Base.size
+using Random: AbstractRNG, default_rng
+using Distributions: Normal
 using Statistics
 import Statistics: cov
 
@@ -17,9 +19,13 @@ using UMBridge: HTTPModel
 using LinearAlgebra: diagm
 using ..FEMClient
 
+using CSV, DataFrames
+import CSV: read
+
 export AbstractSensorSet
 export EqualSensorSet
 export calculate_projection_matrix
+export project, projection_matrix, apply_noise!
 
 """
     abstract type AbstractSensorSet{T}
@@ -77,6 +83,22 @@ function projection_matrix(sensor_set::EqualSensorSet{T}) where {T}
     return sensor_set.projection
 end
 
+
+"""
+    project(sensor_set::AbstractSensorSet{T},full_field_measurement::Matrix{T}) where {T}
+
+Apply the projection matrix of the `sensor_set` to the `full_field_measurement` 
+to obtain a measurement at the sensor locations.
+"""
+function project(sensor_set::AbstractSensorSet{T}, full_field_measurement::Matrix{T}) where {T}
+    dim = size(full_field_measurement)[2]
+    projected_measurements = zeros(T, size(sensor_set), dim)
+    for i in 1:dim
+        projected_measurements[:, i] = projection_matrix(sensor_set) * full_field_measurement[:, i]
+    end
+    return projected_measurements
+end
+
 """
     size(sensor_set::EqualSensorSet{T}) where T
 
@@ -96,5 +118,29 @@ function Statistics.cov(sensor_set::EqualSensorSet{T})::AbstractMatrix{T} where 
     return (sensor_set.σ)^2 * diagm(ones(T, size(sensor_set)))
 end
 
+"""
+    apply_noise!(sensor_set::EqualSensorSet{T},projected_measurement::Matrix{T};rng::AbstractRNG=default_rng()) where {T}
+
+Sample noise from a Normal distribution with standard deviation `sensor_set.σ` and 
+add the noise to the measurement at sensor locations.
+"""
+function apply_noise!(sensor_set::EqualSensorSet{T}, projected_measurement::Matrix{T}; rng::AbstractRNG = default_rng()) where {T}
+    noise_distribution = Normal(0.0, sensor_set.σ)
+    for i in 1:size(projected_measurement)[2]
+        noise = rand(rng, noise_distribution, size(sensor_set))
+        projected_measurement[:, i] += noise
+    end
+    return
+end
+
+"""
+    CSV.read(source,::Type{EqualSensorSet{T}},σ_sensor::T=1.0;kwargs...) where {T <: AbstractFloat}
+
+Read in a CSV of sensor points to create a set of sensors with equal measurement error
+"""
+function CSV.read(source, ::Type{EqualSensorSet{T}}, σ_sensor::T = 1.0; kwargs...) where {T <: AbstractFloat}
+    data = CSV.read(source, DataFrame; kwargs...)
+    return EqualSensorSet([Vector{T}(row) for row in eachrow(data)], σ_sensor)
+end
 
 end
