@@ -7,6 +7,8 @@ authors = ["Jan Philipp Thiele <jan-philipp.thiele@tu-braunschweig.de>", "Andrea
 projects = ["docs"]
 
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Mocking = "78c3b35d-d492-501b-9361-3d52fe80e533"
@@ -23,7 +25,7 @@ ExtendableFEMBase = "12fb9182-3d4c-4424-8fd1-727a0899810c"
 ExtendableGrids = "cfc395e8-590f-11e8-1f13-43a2532b2fa8"
 
 [extensions]
-StatFEMEUCLIDExtendableFEMBaseExt = ["ExtendableFEMBase","ExtendableGrids"]
+StatFEMEUCLIDExtendableFEMBaseExt = ["ExtendableFEMBase", "ExtendableGrids"]
 
 [compat]
 Aqua = "0.8.15"
@@ -48,11 +50,9 @@ julia = "1.10"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
-CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Gmsh = "705231aa-382f-11e9-3f0c-b7cb4346fdeb"
 GridVisualize = "5eed8a63-0fb0-45eb-886d-8d5a387d12b8"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test", "Aqua", "ExtendableGrids", "Gmsh", "GridVisualize", "CSV", "DataFrames","ExtendableFEMBase"]
+test = ["Test", "Aqua", "ExtendableGrids", "Gmsh", "GridVisualize", "ExtendableFEMBase"]
