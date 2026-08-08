@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [Unreleased]
+
+### Added
+- Result plots for Example201
+- Compat for Polychaos 2
+- Functionality for EqualSensorSet, `read`, `project` and `apply_noise!`
+
+### Changed
+- Reduced number of sensors in Example201
+- Expanded description of Example201
+- setup-python action version to 7
+
 ## [0.2.2] - 2026-07-10
 
 ### Added 

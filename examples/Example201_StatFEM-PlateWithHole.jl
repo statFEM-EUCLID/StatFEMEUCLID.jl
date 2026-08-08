@@ -8,26 +8,41 @@
 
 
 In this example the statistical finite element method (StatFEM) 
-is used to calculate a Bayesian posterior of a sampled finite element solution (prior) based on given data.
+is used to calculate a Bayesian posterior of a sampled finite element solution (prior) based on given data at sensor locations.
 
-The underlying setup is a 2-dimensional plate with a hole.
-The mesh is given through `Example201_mesh.msh`.
+The underlying setup is a 2-dimensional plate with a hole,
+with a mesh given in `Example201_mesh.msh`.
+The figure shows the mesh as well as the sensor locations
+![](../assets/examples/201_sensor_locations.png)
+
+Since the mesh only contains a quarter of a full plate,
+we apply symmetry conditions, e.g. zero normal displacements, on the left and bottom boundary.
 A traction force is applied to the right boundary (boundary id 1)
-The left and bottom boundaries have symmetry conditions such that 
-$u_x$ and $u_y$ are constrained to 0 respectively.
-The mean force is given as $\mu_F=0.5$.
+and the top is a free boundary.
 
-The synthetic measurement data is obtained by solving the problem with a Mooney-Rivlin model
-with $\mu_F$. The full field solution is then mapped to a known set of sensor locations and further perturbed
-by Gaussian noise on the sensor points. To regenerate the data you need a server that can solve the problem 
-with Mooney Rivlin and pass the appropriate `server_url` to the `generate_synthetic_data` function.
-The results are saved and given as `Example201_measurements.csv` such that the following prior sampling
-and statFEM can be performed with a server capable of solving the problem with linear elasticity.
+Instead of experimental data we have generated synsthetic measurements 
+by by solving the problem with a Mooney-Rivlin model with the mean traction $\mu_F=0.5$. 
+The resulting full field solution is first mapped to the sensor locations and
+then perturbed by a Gaussian noise sample for each of the sensor points.
+This data is available in `Example201_measurements.csv`
 
-The prior is obtained by solving a the problem with linear elasticity 
-with matching material parameters. Additionally, the prior
-is obtained as a PCE sample with a normally distributed traction force with $\sigma_F=2.5e-2$.
+For the StatFEM assimilation we start like in Example101 by calculating a PCE surrogate
+for the sampled displacements. For the sampling we solve the problem with 
+a linear elastic material with parameters corresponding to the Mooney-Rivlin parameters.
+With the PCE surrogate, the measurement data and projection from the sensor locations
+we use StatFEM to calculate the posterior mean and covariance.
+For a better visual comparison we plot the prior and posterior displacements 
+and their confidence intervals (CI) along bottom boundary.
+![](../assets/examples/201_bottom_displacements.png)
 
+
+!!! note 
+
+    If you want to regenerate the synthetic measurement data you will need a server that 
+    is capable of solving the problem with the Mooney Rivlin model.
+    The generation is done through the `generate_synthetic_data` function, where you can pass 
+    the `server_url` matching your server. 
+    The data in the repository was generated with the [Ferrit.jl-based server](https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl).
 
 !!! warning "Important"
 
@@ -182,8 +197,8 @@ function plot_displacements_along_bottom_boundary(grid, sensor_points, measureme
 
 
     # Finally, plot both prior and posterior with confidence bands
-    band!(f[1, 1], bottom_x_grid, lower_percentile_PCE, upper_percentile_PCE; label = "prior 95% CI", color = (:red, 0.5))
-    lines!(f[1, 1], bottom_x_grid, bottom_μ_PCE; label = "prior mean", color = :red)
+    band!(f[1, 1], bottom_x_grid, lower_percentile_PCE, upper_percentile_PCE; label = "prior 95% CI", color = (:gold2, 0.5))
+    lines!(f[1, 1], bottom_x_grid, bottom_μ_PCE; label = "prior mean", color = :gold2)
     band!(f[1, 1], bottom_x_grid, lower_percentile_post, upper_percentile_post; label = "posterior 95% CI", color = (:blue, 0.5))
     lines!(f[1, 1], bottom_x_grid, bottom_μ_post; label = "posterior mean", color = :blue)
     # as well as the measurement data
@@ -206,7 +221,7 @@ function plot_sensors(grid, sensor_points::Vector{Vector{Float64}})
         y[i] = sensor_points[i][2]
     end
     customplot!(sensorvis) do ax
-        CairoMakie.scatter!(ax, x, y)
+        CairoMakie.scatter!(ax, x, y, color = :gold, markersize = 15)
     end
     return sensorvis
 end
@@ -265,6 +280,19 @@ function generate_synthetic_data(;
     # before writing the result to file.
     dataframe_measurements = DataFrame(u_x = u_measured[:, 1], u_y = u_measured[:, 2])
     return CSV.write("Example201_measurements.csv", dataframe_measurements)
+end
+
+
+#The following functions override the default behaviour of GridVisualizeTools
+#to remove coloring of cells and boundaries from the sensor plot.
+using Colors
+import GridVisualizeTools: region_cmap, bregion_cmap
+function region_cmap(n)
+    return fill(RGB(1.0, 1.0, 1.0), n)
+end
+
+function bregion_cmap(n)
+    return fill(RGBA(0.0, 0.0, 0.0, 0.0), n)
 end
 
 end
