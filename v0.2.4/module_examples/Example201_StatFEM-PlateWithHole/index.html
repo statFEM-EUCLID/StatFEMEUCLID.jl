@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Example201_StatFEM-PlateWithHole · StatFEMEUCLID.jl</title><meta name="title" content="Example201_StatFEM-PlateWithHole · StatFEMEUCLID.jl"/><meta property="og:title" content="Example201_StatFEM-PlateWithHole · StatFEMEUCLID.jl"/><meta property="twitter:title" content="Example201_StatFEM-PlateWithHole · StatFEMEUCLID.jl"/><meta name="description" content="Documentation for StatFEMEUCLID.jl."/><meta property="og:description" content="Documentation for StatFEMEUCLID.jl."/><meta property="twitter:description" content="Documentation for StatFEMEUCLID.jl."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="StatFEMEUCLID.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">StatFEMEUCLID.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../umbridge_interfaces/">UMBridge interfaces</a></li><li><span class="tocitem">Submodules</span><ul><li><a class="tocitem" href="../../submodules/femclient/">FEMClient</a></li><li><a class="tocitem" href="../../submodules/sampling/">Sampling</a></li><li><a class="tocitem" href="../../submodules/pce/">PCE</a></li><li><a class="tocitem" href="../../submodules/sensorsets/">SensorSets</a></li><li><a class="tocitem" href="../../submodules/statfem/">StatFEM</a></li><li><a class="tocitem" href="../../submodules/inverse/">Inverse</a></li></ul></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../Example101_Sampling1DBarUnderTension/">Example101_Sampling1DBarUnderTension</a></li><li class="is-active"><a class="tocitem" href>Example201_StatFEM-PlateWithHole</a></li><li><a class="tocitem" href="../Example202_Inverse-PlateWithHole/">Example202_Inverse-PlateWithHole</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Example201_StatFEM-PlateWithHole</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Example201_StatFEM-PlateWithHole</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl/blob/main/docs/src/module_examples/Example201_StatFEM-PlateWithHole.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><p>Copyright (c) 2026 Jan Philipp Thiele and Andrea Morini SPDX-License-Identifier MIT</p><h1 id="201:-Using-StatFEM-on-a-2D-Plate-with-a-hole"><a class="docs-heading-anchor" href="#201:-Using-StatFEM-on-a-2D-Plate-with-a-hole">201: Using StatFEM on a 2D Plate with a hole</a><a id="201:-Using-StatFEM-on-a-2D-Plate-with-a-hole-1"></a><a class="docs-heading-anchor-permalink" href="#201:-Using-StatFEM-on-a-2D-Plate-with-a-hole" title="Permalink"></a></h1><p>(<a href="../Example201_StatFEM-PlateWithHole.jl">source code</a>)</p><p>In this example the statistical finite element method (StatFEM) is used to calculate a Bayesian posterior of a sampled finite element solution (prior) based on given data at sensor locations.</p><p>The underlying setup is a 2-dimensional plate with a hole, with a mesh given in <code>Example201_mesh.msh</code>. The figure shows the mesh as well as the sensor locations <img src="../../assets/examples/201_sensor_locations.png" alt/></p><p>Since the mesh only contains a quarter of a full plate, we apply symmetry conditions, e.g. zero normal displacements, on the left and bottom boundary. A traction force is applied to the right boundary (boundary id 1) and the top is a free boundary.</p><p>Instead of experimental data we have generated synsthetic measurements by by solving the problem with a Mooney-Rivlin model with the mean traction <span>$\mu_F=0.5$</span>. The resulting full field solution is first mapped to the sensor locations and then perturbed by a Gaussian noise sample for each of the sensor points. This data is available in <code>Example201_measurements.csv</code></p><p>For the StatFEM assimilation we start like in Example101 by calculating a PCE surrogate for the sampled displacements. For the sampling we solve the problem with a linear elastic material with parameters corresponding to the Mooney-Rivlin parameters. With the PCE surrogate, the measurement data and projection from the sensor locations we use StatFEM to calculate the posterior mean and covariance. For a better visual comparison we plot the prior and posterior displacements and their confidence intervals (CI) along bottom boundary. <img src="../../assets/examples/201_bottom_displacements.png" alt/></p><div class="admonition is-info" id="Note-54efbe6f85430d67"><header class="admonition-header">Note<a class="admonition-anchor" href="#Note-54efbe6f85430d67" title="Permalink"></a></header><div class="admonition-body"><p>If you want to regenerate the synthetic measurement data you will need a server that is capable of solving the problem with the Mooney Rivlin model. The generation is done through the <code>generate_synthetic_data</code> function, where you can pass the <code>server_url</code> matching your server. The data in the repository was generated with the <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl">Ferrit.jl-based server</a>.</p></div></div><div class="admonition is-warning" id="Important-5e95e4930423de38"><header class="admonition-header">Important<a class="admonition-anchor" href="#Important-5e95e4930423de38" title="Permalink"></a></header><div class="admonition-body"><p>Remember to start your UMBridge FEM server before running the example!</p></div></div><pre><code class="language-julia hljs">module Example201_StatFEM_PlateWithHole
+
+using StatFEMEUCLID
+using Random
+using Distributions
+using UMBridge
+using CairoMakie
+using Gmsh
+using ExtendableGrids
+using GridVisualize
+using CSV, DataFrames
+using PolyChaos
+using LinearAlgebra: diag</code></pre><p>If the forward model does not provide a projection (see below) we can use the StatFEMEUCLID extension enabled by loading ExtendableFEMBase</p><pre><code class="language-julia hljs">using ExtendableFEMBase</code></pre><p>With <code>server_url</code> you can point to a different UMBridge server implementing the model the default is what is provided by the Ferrite.jl-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/">here</a>. An alternative is provided by the Kratos-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Kratos.py/">here</a> with <code>server_url=&quot;http://localhost:4242</code>. Note that the Kratos implementation only provides the linear elasticity model, so it can not be used for the data generation.</p><pre><code class="language-julia hljs">function main(;
+        μ_F = 0.5,
+        σ_F = 2.5e-2,
+        n_PCE = 30,
+        E = 2.7,
+        ν = 0.35,
+        σ_sensor = 0.5,
+        server_url = &quot;http://localhost:4232&quot;,
+    )
+
+    rng = MersenneTwister(2530)  #fixed seed for comparability between runs</code></pre><p>As in Example101 we start by defining UMBridge HTML models for querying the forward model</p><pre><code class="language-julia hljs">    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)</code></pre><p>Additionally, we need the projection from degrees of freedom to the sensor locations. The ordering should follow the ordering given by the mesh file, otherwise the plotting will produce wrong results. The consistent option has the server provide this mapping.</p><pre><code class="language-julia hljs">    projection_model = UMBridge.HTTPModel(model_name * &quot;.projection&quot;, server_url)</code></pre><p>For calculating the projection on the client side we have to provide the grid but we also need it for plotting, so we load it early</p><pre><code class="language-julia hljs">    grid = ExtendableGrids.simplexgrid_from_gmsh(&quot;Example201_mesh.msh&quot;, Tc = Float64, Ti = Int64)</code></pre><p>Since some of our example servers can solve for more than one material model we now need to specify this in a configuration. However, if the server only solves linear elasticity this can and would be ignored by default.</p><pre><code class="language-julia hljs">    LE_material_config = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;LinElastic&quot;
+    )</code></pre><p>In general, we want to be able to change other parameters, in the case the material parameters. Therefore, these are passed as additional arguments through UMBridge, such that the server should expect an input vector <code>[[F],[\nu,E]]</code> in case of linear elasticity, or in general <code>[[F],[extra_params]]</code>. The additional parameters are passed with the optional <code>extra_params</code> keyword argument.</p><pre><code class="language-julia hljs">    ux_prior_sample = sample_FEM(
+        fem_model,
+        n_PCE,
+        sample_distribution = Normal(μ_F, σ_F),
+        rng = rng,
+        config = LE_material_config,
+        extra_params = [ν, E]
+    )</code></pre><p>For statFEM we need three components, a PCE surrogate, measurement data and a projection matrix H from our solution space (dofs) to the locations of the sensors where the measurements were taken.</p><p>1 PCE surrogate, see Example101</p><pre><code class="language-julia hljs">    ux_pce_surrogate = PolyChaosExpansion(ux_prior_sample, polynomials = GaussOrthoPoly(4))</code></pre><p>2 Sensor points from file + projection matrix</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example201_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)</code></pre><p>If your forward model provides the projection you build the matrix with the following commands</p><pre><code class="nohighlight hljs">n_dofs = UMBridge.model_output_sizes(fem_model)[1]
+calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>Otherwise the extension provides (needs <code>using ExtendableFEMBase</code>)</p><pre><code class="language-julia hljs">    calculate_projection_matrix(sensor_set, grid)</code></pre><p>3 Read in (synthetic) measurements</p><pre><code class="language-julia hljs">    dataframe_measurements = CSV.read(&quot;Example201_measurements.csv&quot;, DataFrame)
+    measurements = [Vector{Float64}(row) for row in eachrow(dataframe_measurements)]
+
+    ux_measurements = zeros(length(measurements))
+    for i in eachindex(measurements)
+        ux_measurements[i] = measurements[i][1]
+    end</code></pre><p>With all components in place, we can now calculate the posterior statistics, i.e. the vector of nodal mean values and covariance matrix.</p><pre><code class="language-julia hljs">    ux_posterior, C_ux_posterior = posterior_statistics(sensor_set, ux_measurements, ux_pce_surrogate)
+    σ_ux_posterior = sqrt.(diag(C_ux_posterior))</code></pre><p>Finally, we want to plot the sensor locations as well as the prior and posterior along the bottom boundary Plot of sensor points and mesh</p><pre><code class="language-julia hljs">    sensorvis = plot_sensors(grid, sensor_set.locations)
+
+    displt = plot_displacements_along_bottom_boundary(grid, sensor_set.locations, measurements, ux_pce_surrogate, ux_posterior, σ_ux_posterior)
+
+    return sensorvis, displt
+end</code></pre><p>This function plots the measurements as well as prior and posterior displacements with confidence intervals on the line along the bottom boundary of the domain.</p><pre><code class="language-julia hljs">function plot_displacements_along_bottom_boundary(grid, sensor_points, measurements, pce_surrogate, μ_posterior, σ_posterior)
+    f = Figure(size = (800, 800))
+    ax = Axis(f[1, 1], xlabel = &quot;x&quot;, ylabel = &quot;u_x&quot;)</code></pre><p>Get the subgrid corresponding to the bottom boundary (boundary id=3)</p><pre><code class="language-julia hljs">    sub = subgrid(grid, [3], boundary = true)
+    bottom_x_grid = Float64.(sub[Coordinates])[1, :]</code></pre><p>Need to specify full name here as compute_statistics is also part of Statistics</p><pre><code class="language-julia hljs">    μ_PCE, σ_PCE = StatFEMEUCLID.PCE.compute_statistics(pce_surrogate)</code></pre><p>Extract the values at the boundary DoFs</p><pre><code class="language-julia hljs">    bottom_μ_PCE = μ_PCE[sub[NodeParents]]
+    bottom_σ_PCE = σ_PCE[sub[NodeParents]]
+    bottom_μ_post = μ_posterior[sub[NodeParents]]
+    bottom_σ_post = σ_posterior[sub[NodeParents]]</code></pre><p>Calculate upper and lower percentiles for the PCE prior and posterior</p><pre><code class="language-julia hljs">    confidence_factor_95p = 1.96
+    lower_percentile_PCE = bottom_μ_PCE - confidence_factor_95p * bottom_σ_PCE
+    upper_percentile_PCE = bottom_μ_PCE + confidence_factor_95p * bottom_σ_PCE
+    lower_percentile_post = bottom_μ_post - confidence_factor_95p * bottom_σ_post
+    upper_percentile_post = bottom_μ_post + confidence_factor_95p * bottom_σ_post</code></pre><p>Find all sensor points which lie on the bottom boundary</p><pre><code class="language-julia hljs">    bottom_ids = findall(x -&gt; x[2] &lt; 1.0e-12, sensor_points)
+
+    bottom_ux = zeros(length(bottom_ids))
+    bottom_x_sen = zeros(length(bottom_ids))
+    for i in eachindex(bottom_ids)
+        bottom_x_sen[i] = sensor_points[bottom_ids[i]][1]
+        bottom_ux[i] = measurements[bottom_ids[i]][1]
+    end</code></pre><p>Finally, plot both prior and posterior with confidence bands</p><pre><code class="language-julia hljs">    band!(f[1, 1], bottom_x_grid, lower_percentile_PCE, upper_percentile_PCE; label = &quot;prior 95% CI&quot;, color = (:gold2, 0.5))
+    lines!(f[1, 1], bottom_x_grid, bottom_μ_PCE; label = &quot;prior mean&quot;, color = :gold2)
+    band!(f[1, 1], bottom_x_grid, lower_percentile_post, upper_percentile_post; label = &quot;posterior 95% CI&quot;, color = (:blue, 0.5))
+    lines!(f[1, 1], bottom_x_grid, bottom_μ_post; label = &quot;posterior mean&quot;, color = :blue)</code></pre><p>as well as the measurement data</p><pre><code class="language-julia hljs">    scatter!(f[1, 1], bottom_x_sen, bottom_ux; label = &quot;noisy measurements&quot;, color = :black)
+    axislegend(ax, position = :lt)
+
+    return f
+end</code></pre><p>Plot the underlying grid as well as the sensor points</p><pre><code class="language-julia hljs">function plot_sensors(grid, sensor_points::Vector{Vector{Float64}})
+
+    sensorvis = GridVisualizer(; Plotter = CairoMakie)
+
+    gridplot!(sensorvis, grid, show_colorbar = false)
+    x = zeros(length(sensor_points))
+    y = zeros(length(sensor_points))
+    for i in eachindex(sensor_points)
+        x[i] = sensor_points[i][1]
+        y[i] = sensor_points[i][2]
+    end
+    customplot!(sensorvis) do ax
+        CairoMakie.scatter!(ax, x, y, color = :gold, markersize = 15)
+    end
+    return sensorvis
+end</code></pre><p>This function generates the synthetic data based on a Mooney-Rivlin model. Note that the forward model has to be able to solve with this material model to regenerate the data. The data in the repository has been generated using the default, i.e. the Ferrite.jl-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/">here</a></p><pre><code class="language-julia hljs">function generate_synthetic_data(;
+        F = 0.5,
+        σ_sensor = 0.5,
+        server_url = &quot;http://localhost:4232&quot;
+    )</code></pre><p>Note that we also need the projection model here since we want to map the FEM solution to the given sensor points.</p><pre><code class="language-julia hljs">    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)
+    projection_model = UMBridge.HTTPModel(model_name * &quot;.projection&quot;, server_url)
+
+    A_10 = 0.3
+    A_01 = 0.2
+    B_1 = 1.5
+
+    κ = [A_10, A_01, B_1]</code></pre><p>We want to solve with the smallest Mooney-Rivlin model with a total of three parameters</p><pre><code class="language-julia hljs">    MR_material_config = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+        &quot;n_MR&quot; =&gt; 1,
+        &quot;n_VOL&quot; =&gt; 1
+    )
+    n_dofs = UMBridge.model_output_sizes(fem_model)[1]</code></pre><p>Since we solve with the exact mean traction force, we don&#39;t have to sample and can directly evaluate the forward model once.</p><pre><code class="language-julia hljs">    u_truth = evaluate_fem_model(
+        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+    )</code></pre><p>Then, we read in the sensor locations and obtain the projection matrix</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example201_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)
+    n_sen = size(sensor_set)
+    calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>and project the solution onto the sensor points</p><pre><code class="language-julia hljs">    u_measured = project(sensor_set, u_truth)</code></pre><p>Finally, we apply a Gaussian noise to the projected measurements</p><pre><code class="language-julia hljs">    apply_noise!(sensor_set, reshape(u_measured, (n_sen, 2)); rng = MersenneTwister(2530))</code></pre><p>before writing the result to file.</p><pre><code class="language-julia hljs">    dataframe_measurements = DataFrame(u_x = u_measured[1:n_sen], u_y = u_measured[(n_sen + 1):(2 * n_sen)])
+    return CSV.write(&quot;Example201_measurements.csv&quot;, dataframe_measurements)
+end
+
+
+#The following functions override the default behaviour of GridVisualizeTools
+#to remove coloring of cells and boundaries from the sensor plot.
+using Colors
+import GridVisualizeTools: region_cmap, bregion_cmap
+function region_cmap(n)
+    return fill(RGB(1.0, 1.0, 1.0), n)
+end
+
+function bregion_cmap(n)
+    return fill(RGBA(0.0, 0.0, 0.0, 0.0), n)
+end
+
+end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Example101_Sampling1DBarUnderTension/">« Example101_Sampling1DBarUnderTension</a><a class="docs-footer-nextpage" href="../Example202_Inverse-PlateWithHole/">Example202_Inverse-PlateWithHole »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 10 August 2026 12:53">Monday 10 August 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Example202_Inverse-PlateWithHole · StatFEMEUCLID.jl</title><meta name="title" content="Example202_Inverse-PlateWithHole · StatFEMEUCLID.jl"/><meta property="og:title" content="Example202_Inverse-PlateWithHole · StatFEMEUCLID.jl"/><meta property="twitter:title" content="Example202_Inverse-PlateWithHole · StatFEMEUCLID.jl"/><meta name="description" content="Documentation for StatFEMEUCLID.jl."/><meta property="og:description" content="Documentation for StatFEMEUCLID.jl."/><meta property="twitter:description" content="Documentation for StatFEMEUCLID.jl."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="StatFEMEUCLID.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">StatFEMEUCLID.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../umbridge_interfaces/">UMBridge interfaces</a></li><li><span class="tocitem">Submodules</span><ul><li><a class="tocitem" href="../../submodules/femclient/">FEMClient</a></li><li><a class="tocitem" href="../../submodules/sampling/">Sampling</a></li><li><a class="tocitem" href="../../submodules/pce/">PCE</a></li><li><a class="tocitem" href="../../submodules/sensorsets/">SensorSets</a></li><li><a class="tocitem" href="../../submodules/statfem/">StatFEM</a></li><li><a class="tocitem" href="../../submodules/inverse/">Inverse</a></li></ul></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../Example101_Sampling1DBarUnderTension/">Example101_Sampling1DBarUnderTension</a></li><li><a class="tocitem" href="../Example201_StatFEM-PlateWithHole/">Example201_StatFEM-PlateWithHole</a></li><li class="is-active"><a class="tocitem" href>Example202_Inverse-PlateWithHole</a><ul class="internal"><li><a class="tocitem" href="#Results"><span>Results</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Example202_Inverse-PlateWithHole</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Example202_Inverse-PlateWithHole</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl/blob/main/docs/src/module_examples/Example202_Inverse-PlateWithHole.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><p>Copyright (c) 2026 Jan Philipp Thiele SPDX-License-Identifier MIT</p><h1 id="202:-Model-parameter-identification-for-a-2D-Plate-with-a-hole"><a class="docs-heading-anchor" href="#202:-Model-parameter-identification-for-a-2D-Plate-with-a-hole">202: Model parameter identification for a 2D Plate with a hole</a><a id="202:-Model-parameter-identification-for-a-2D-Plate-with-a-hole-1"></a><a class="docs-heading-anchor-permalink" href="#202:-Model-parameter-identification-for-a-2D-Plate-with-a-hole" title="Permalink"></a></h1><p>(<a href="../Example202_Inverse-PlateWithHole.jl">source code</a>)</p><p>In this example different methods for identification of constitutive model parameters are used to re-identify a known truth that was used to generate synthetic data.</p><p>The underlying setup is the same as in the previous example. For the synthetic data the main difference is that we now save the noiseless full-field information, i.e. at all nodes of the mesh.</p><p>For the parameter identification we differentiate between two options</p><ul><li>calibration, where we assume the model is known and use a goal function similar to the virtual fields and equilibrium gap methods to identify the parameters</li><li>discovery, where we don&#39;t assume a specific model, but use a larger model library and additional regularization to select the relevant parameters</li></ul><h2 id="Results"><a class="docs-heading-anchor" href="#Results">Results</a><a id="Results-1"></a><a class="docs-heading-anchor-permalink" href="#Results" title="Permalink"></a></h2><p>For both approaches we compare two different optimizers, a gradient-free Nelder-Mead (NM) and a gradient-based BFGS. The gradient-free optimizer is especially interesting if your forward model can not provide the gradient of the residual w.r.t to the material parameters, as numeric differentiation is not necessarily robust.</p><h3 id="Calibration"><a class="docs-heading-anchor" href="#Calibration">Calibration</a><a id="Calibration-1"></a><a class="docs-heading-anchor-permalink" href="#Calibration" title="Permalink"></a></h3><p>For the pure calibration setup, where the material model is known but its parameters <span>$\kappa_{\text{true}}$</span> are assumed to be unknown, the goal functional is the L2-norm of the FEM residual vector. Both optimizations take a similar amount of time for this setup and the identified parameters are shown in the table below.</p><table><tr><th style="text-align: center"></th><th style="text-align: right"><span>$\kappa_{\text{true}}$</span></th><th style="text-align: right"><span>$\kappa_{\text{NM}}^*$</span></th><th style="text-align: right"><span>$\kappa_{\text{BFGS}}^*$</span></th></tr><tr><td style="text-align: center"><span>$A_{10}$</span></td><td style="text-align: right">0.3</td><td style="text-align: right">0.2999996355675296</td><td style="text-align: right">0.2999996518345033</td></tr><tr><td style="text-align: center"><span>$A_{01}$</span></td><td style="text-align: right">0.2</td><td style="text-align: right">0.2000003849699102</td><td style="text-align: right">0.2000003664689581</td></tr><tr><td style="text-align: center"><span>$B_{1}$</span></td><td style="text-align: right">1.5</td><td style="text-align: right">1.5000001106084495</td><td style="text-align: right">1.5000001073678113</td></tr></table><h3 id="Discovery"><a class="docs-heading-anchor" href="#Discovery">Discovery</a><a id="Discovery-1"></a><a class="docs-heading-anchor-permalink" href="#Discovery" title="Permalink"></a></h3><p>For the discovery the goal functional also has an L1-regularization term. Additionally, for this specific setup with a large Mooney-Rivlin model, we add a penalization term to ensure compressibility. Since this is a harder optimization problem we also compare results with an outer primal interior point method (IP) around NM or BFGS. On a Laptop with an Intel Core Ultra 7 265U processor the fastest method was BFGS taking around 60 seconds, so be aware of this when running the example. All other EUCLID runs take significantly longer (NM: 580s, IP-NM: 1280s, IP-BFGS:240s), so they are commented out by default.</p><table><tr><th style="text-align: center"></th><th style="text-align: right"><span>$\kappa_{\text{true}}$</span></th><th style="text-align: left"><span>$\kappa_{\text{NM}}^*$</span></th><th style="text-align: left"><span>$\kappa_{\text{BFGS}}^*$</span></th><th style="text-align: left"><span>$\kappa_{\text{IP-NM}}^*$</span></th><th style="text-align: left"><span>$\kappa_{\text{IP-BFGS}}^*$</span></th></tr><tr><td style="text-align: center"><span>$A_{10}$</span></td><td style="text-align: right">0.3</td><td style="text-align: left">0.30217189437873715</td><td style="text-align: left">0.3000002740255784</td><td style="text-align: left">0.2845441199595386</td><td style="text-align: left">0.2999997391289652</td></tr><tr><td style="text-align: center"><span>$A_{01}$</span></td><td style="text-align: right">0.2</td><td style="text-align: left">0.19280542741216714</td><td style="text-align: left">0.1999997277608331</td><td style="text-align: left">0.2161550941421935</td><td style="text-align: left">0.2000002734711289</td></tr><tr><td style="text-align: center"><span>$A_{20}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0000110892436136</td><td style="text-align: left">0.0000017833983007</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$A_{11}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.05506791508307378</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0001403260875725</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$A_{02}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0000148435620673</td><td style="text-align: left">0.0000001763018293</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$A_{30}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0001085739641259</td><td style="text-align: left">0.0000000150109834</td></tr><tr><td style="text-align: center"><span>$A_{21}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.01578347281041807</td><td style="text-align: left">0.0000181101673901</td><td style="text-align: left">0.0001589385506675</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$A_{12}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0000017408432304</td><td style="text-align: left">0.0000020167020899</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$A_{03}$</span></td><td style="text-align: right">0.0</td><td style="text-align: left">0.05380845291756604</td><td style="text-align: left">0.0</td><td style="text-align: left">0.0003512676660859</td><td style="text-align: left">0.0</td></tr><tr><td style="text-align: center"><span>$B_{1}$</span></td><td style="text-align: right">1.5</td><td style="text-align: left">1.4995740646402762</td><td style="text-align: left">1.4999999756971945</td><td style="text-align: left">1.5043888013198317</td><td style="text-align: left">1.5000000828350004</td></tr></table><div class="admonition is-warning" id="Important-5e95e4930423de38"><header class="admonition-header">Important<a class="admonition-anchor" href="#Important-5e95e4930423de38" title="Permalink"></a></header><div class="admonition-body"><p>Remember to start your UMBridge FEM server before running the example!</p></div></div><pre><code class="language-julia hljs">module Example202_EUCLID_PlateWithHole
+
+using StatFEMEUCLID
+using Random
+using Distributions
+using CairoMakie
+using Gmsh
+using ExtendableGrids
+using GridVisualize
+using CSV, DataFrames
+using Optim
+using UMBridge
+using LineSearches
+using LinearAlgebra</code></pre><p>With <code>server_url</code> you can point to a different UMBridge server implementing the model the default is what is provided by the Ferrite.jl-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/">here</a></p><pre><code class="language-julia hljs">function main(;
+        server_url = &quot;http://localhost:4232&quot;,
+        F = 0.5
+    )
+
+    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)
+    residual_model = UMBridge.HTTPModel(model_name * &quot;.residual&quot;, server_url)
+
+    config_cal = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+        &quot;n_MR&quot; =&gt; 1,
+        &quot;n_VOL&quot; =&gt; 1
+    )
+
+    κ_0_cal = [0.12, 0.12, 0.72]
+
+    dataframe_measurments = CSV.read(&quot;Example202_measurements.csv&quot;, DataFrame)
+    measurements = [Vector{Float64}(row) for row in eachrow(dataframe_measurments)]
+
+    n_dofs = length(measurements)
+    u_measurements = zeros(2 * n_dofs)
+
+    for i in eachindex(measurements)
+        u_measurements[i] = measurements[i][1]
+        u_measurements[n_dofs + i] = measurements[i][2]
+    end
+
+
+    f_cal, g_cal! = create_residual_objective_and_gradient(residual_model, u_measurements; config = config_cal)
+
+    optimal_residual_cal_NM = optimize(f_cal, κ_0_cal, NelderMead())
+
+    @show optimal_residual_cal_NM
+    κ_opt_cal_NM = Optim.minimizer(optimal_residual_cal_NM)
+    @show κ_opt_cal_NM
+
+    optimal_residual_cal_BFGS = optimize(
+        f_cal, g_cal!, κ_0_cal,
+        BFGS(linesearch = LineSearches.BackTracking(order = 3))
+    )
+
+    @show optimal_residual_cal_BFGS
+    κ_opt_cal_BFGS = Optim.minimizer(optimal_residual_cal_BFGS)
+    @show κ_opt_cal_BFGS
+
+    config_disc = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+        &quot;n_MR&quot; =&gt; 3,
+        &quot;n_VOL&quot; =&gt; 1
+    )</code></pre><p>Since we have to pass this information to multiple functions, we combine the two UMBridge models with their config and the mean traction.</p><pre><code class="language-julia hljs">    euclid_config = InverseModelConfig(fem_model, residual_model, config_disc, F)
+
+    κ_0_disc = [0.4, 0.4, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 6.3]
+
+    lasso_sweep = 5 * logrange(1.0e-5, 1.0, 6)
+
+
+    f_disc, g_disc! = create_residual_objective_and_gradient(residual_model, reshape(u_measurements, n_dofs * 2); config = config_disc)
+    f_mr_penalty, g_mr_penalty! = MooneyRivlin_penalization(3.0, 10.0)
+    function f_penalized(κ)
+        return f_disc(κ) + f_mr_penalty(κ)
+    end
+    function g_penalized!(G, κ)
+        g_disc!(G, κ)
+        return g_mr_penalty!(G, κ) #written to add on to G
+    end
+
+    sensor_set = FullFieldSensorSet(n_dofs)
+
+
+    @info &quot;EUCLID with BFGS&quot;
+    EUCLID(euclid_config, lasso_sweep, κ_0_disc, sensor_set, u_measurements, f_penalty = f_mr_penalty, g_penalty = g_mr_penalty!, show_info = true, use_gradient = true)
+
+    #= The following EUCLID calls are all commented out because they take significantly longer.
+
+    @info &quot;EUCLID with NelderMead&quot;
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+    f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
+    show_info=true,use_gradient=false,
+    optimizer=NelderMead(),
+    optimizer_options=Optim.Options(g_abstol=1.0e-10,iterations=10_000))
+
+    lower = zeros(length(κ_0_disc))
+    upper = 50.0.*ones(length(κ_0_disc))
+
+
+    @info &quot;EUCLID with Fminbox NelderMead&quot;
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+    f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
+    upper=upper,lower=lower,
+    show_info=true,use_gradient=false,
+    optimizer=Fminbox(NelderMead()),
+    optimizer_options=Optim.Options(time_limit=200))
+
+    @info &quot;EUCLID with Fminbox BFGS&quot;
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+        f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
+        upper=upper,lower=lower,
+        show_info=true,use_gradient=true,
+        optimizer=Fminbox(BFGS(linesearch=LineSearches.BackTracking())),
+        optimizer_options=Optim.Options(time_limit=200)
+    )
+
+    =#
+    return nothing
+end
+
+function MooneyRivlin_penalization(penalty_multiplier, penalization_weight)
+    function f(κ)
+        return abs(sum(κ[1:(end - 1)]) * penalty_multiplier - κ[end]) * penalization_weight
+    end
+    function g!(G, κ)
+        s = sign(sum(κ[1:(end - 1)] * penalty_multiplier) - κ[end])
+        G[1:(end - 1)] .+= penalization_weight * penalty_multiplier * s
+        return G[end] -= penalization_weight * s
+    end
+
+    return f, g!
+end</code></pre><p>This function generates the synthetic data based on a Mooney-Rivlin model. Note that the forward model has to be able to solve with this material model to regenerate the data.</p><pre><code class="language-julia hljs">function generate_synthetic_data(;
+        F = 0.5,
+        server_url = &quot;http://localhost:4232&quot;
+    )</code></pre><p>In contrast to the previous example, we are using full field data, so we don&#39;t need the projection here.</p><pre><code class="language-julia hljs">    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)
+
+    A_10 = 0.3
+    A_01 = 0.2
+    B_1 = 1.5
+
+    κ = [A_10, A_01, B_1]</code></pre><p>We want to solve with the smallest Mooney-Rivlin model with a total of three parameters</p><pre><code class="language-julia hljs">    MR_material_config = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+        &quot;n_MR&quot; =&gt; 1,
+        &quot;n_VOL&quot; =&gt; 1
+    )
+    n_dofs = UMBridge.model_output_sizes(fem_model)[1]</code></pre><p>Since we solve with the exact mean traction force, we don&#39;t have to sample and can directly evaluate the forward model once.</p><pre><code class="language-julia hljs">    u_truth = zeros(n_dofs, 2)
+    u_truth_full = evaluate_fem_model(
+        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+    )
+    u_truth[:, 1] = u_truth_full[1:n_dofs]
+    u_truth[:, 2] = u_truth_full[(n_dofs + 1):end]</code></pre><p>and finally write the result to file</p><pre><code class="language-julia hljs">    dataframe_measurements = DataFrame(u_x = u_truth[:, 1], u_y = u_truth[:, 2])
+    return CSV.write(&quot;Example202_measurements.csv&quot;, dataframe_measurements)
+end
+
+end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Example201_StatFEM-PlateWithHole/">« Example201_StatFEM-PlateWithHole</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Monday 10 August 2026 12:53">Monday 10 August 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
