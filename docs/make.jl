@@ -40,6 +40,7 @@ function make_all(; with_examples::Bool = false, modules = :all, run_examples::B
                 "PCE" => "submodules/pce.md"
                 "SensorSets" => "submodules/sensorsets.md"
                 "StatFEM" => "submodules/statfem.md"
+                "Inverse" => "submodules/inverse.md"
             ]
             "Examples" => module_examples
         ],

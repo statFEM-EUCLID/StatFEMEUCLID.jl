@@ -5,8 +5,6 @@
    SensorSets
 
 This submodule contains structs describing a collection of measurement sensors.
-So far, only an `EqualSensorSet` is implemented, 
-where all sensors have the same measurement accuracy.
 """
 module SensorSets
 import Base.size
@@ -23,7 +21,7 @@ using CSV, DataFrames
 import CSV: read
 
 export AbstractSensorSet
-export EqualSensorSet
+export EqualSensorSet, FullFieldSensorSet
 export calculate_projection_matrix
 export project, projection_matrix, apply_noise!
 
@@ -64,6 +62,40 @@ end
 
 
 """
+    struct FullFieldSensorSet{T} <: AbstractSensorSet{T}
+
+A mock sensor set when the full FE field without noise is measured.
+For example when using EUCLID without StatFEM.
+
+# Fields
+- `n_dofs::Int{T}` - number of unknowns in one dimension
+- `projection::Matrix{T}` - Projection matrix from degrees of freedom of an FEM solution to themselves (identity)
+"""
+struct FullFieldSensorSet{T} <: AbstractSensorSet{T}
+    n_dofs::Int64
+    projection::Matrix{T}
+end
+
+"""
+    FullFieldSensorSet(::Type{T}, n_dofs::Int64) where {T <: AbstractFloat}
+
+Construct a FullFieldSensorSet with matrix value type T.
+"""
+function FullFieldSensorSet(::Type{T}, n_dofs::Int64) where {T <: AbstractFloat}
+    return FullFieldSensorSet(n_dofs, diagm(ones(T, n_dofs)))
+end
+
+"""
+    FullFieldSensorSet(n_dofs::Int64)
+
+Construct a FullFieldSensorSet with default matrix value type Float64.
+"""
+function FullFieldSensorSet(n_dofs::Int64)
+    return FullFieldSensorSet(Float64, n_dofs)
+end
+
+
+"""
     calculate_projection_matrix(sensor_set::EqualSensorSet{T}, projection_model::HTTPModel, n_dofs::Int64) where {T}
 
 Query the `projection_model` to calculate a projection matrix based on the sensor locations of the `sensor_set`.
@@ -85,16 +117,28 @@ end
 
 
 """
+    projection_matrix(sensor_set::FullFieldSensorSet{T}) where {T}
+
+Returns the projection matrix of the `sensor_set` mapping from FEM degrees of freedom to the sensor locations.
+"""
+function projection_matrix(sensor_set::FullFieldSensorSet{T}) where {T}
+    return sensor_set.projection
+end
+
+"""
     project(sensor_set::AbstractSensorSet{T},full_field_measurement::Matrix{T}) where {T}
 
 Apply the projection matrix of the `sensor_set` to the `full_field_measurement` 
 to obtain a measurement at the sensor locations.
 """
-function project(sensor_set::AbstractSensorSet{T}, full_field_measurement::Matrix{T}) where {T}
-    dim = size(full_field_measurement)[2]
-    projected_measurements = zeros(T, size(sensor_set), dim)
-    for i in 1:dim
-        projected_measurements[:, i] = projection_matrix(sensor_set) * full_field_measurement[:, i]
+function project(sensor_set::AbstractSensorSet{T}, full_field_measurement::Vector{T}) where {T}
+    n_dofs = size(projection_matrix(sensor_set))[2]
+    dim = div(length(full_field_measurement), n_dofs)
+    n_sen = size(sensor_set)
+    projected_measurements = zeros(T, n_sen * dim)
+    for i in 0:(dim - 1)
+        projected_measurements[(1:n_sen) .+ (i * n_sen)] =
+            projection_matrix(sensor_set) * full_field_measurement[(1:n_dofs) .+ (i * n_dofs)]
     end
     return projected_measurements
 end
@@ -106,6 +150,15 @@ Returns the size of the `sensor_set`, i.e. the number of sensors.
 """
 function Base.size(sensor_set::EqualSensorSet{T}) where {T}
     return length(sensor_set.locations)
+end
+
+"""
+    size(sensor_set::FullFieldSensorSet{T}) where T
+
+Returns the size of the `sensor_set`, i.e. the number of nodes/degrees of freedom of a scalar variable.
+"""
+function Base.size(sensor_set::FullFieldSensorSet{T}) where {T}
+    return sensor_set.n_dofs
 end
 
 """
