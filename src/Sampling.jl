@@ -31,7 +31,12 @@ struct UnivariateFEMSample{T <: Real}
 end
 
 function draw_FEM_samples(fem_model::HTTPModel, parameter_sample::Vector{Float64}; solution_index = 1, config = empty_config(), extra_params::Vector{Float64} = Float64[])
-    samples = zeros(length(parameter_sample), @mock(model_output_sizes(fem_model))[1])
+    n_res = @mock(model_output_sizes(fem_model))[1]
+    if solution_index == Colon()
+        n_res *= length(model_output_sizes(fem_model))
+    end
+    samples = zeros(length(parameter_sample), n_res)
+
     for i in eachindex(parameter_sample)
         samples[i, :] .= evaluate_fem_model(fem_model, parameter_sample[i], solution_index = solution_index, config = config, extra_params = extra_params)
     end
