@@ -1,17 +1,17 @@
-# Copyright (c) 2025-2026 Jan Philipp Thiele
+# Copyright (c) 2025-2026 Jan Philipp Thiele and Andrea Morini
 # SPDX-License-Identifier: MIT
 
 
 """
     FEMClient
 
-This submodule contains wrapper functions around `UMBridge.jl`` for conversion 
+This submodule contains wrapper functions around `UMBridge.jl` for conversion 
 between Julia types and what UMBridge.jl expects or returns.
 """
 module FEMClient
 
 
-using UMBridge: evaluate, HTTPModel
+using UMBridge: evaluate, gradient, HTTPModel
 using Mocking: @mock
 
 export evaluate_fem_model
@@ -73,6 +73,11 @@ function evaluate_fem_model(fem_model::HTTPModel, parameters::Vector{Float64}; s
     return Float64.(eval_result[solution_index])
 end
 
+"""
+    evaluate_projection(projection_model::HTTPModel, sensor_points::Vector{Vector{T}}, n_dofs::Int64) where {T <: Real}
+
+TBW
+"""
 function evaluate_projection(projection_model::HTTPModel, sensor_points::Vector{Vector{T}}, n_dofs::Int64) where {T <: Real}
     result = zeros(length(sensor_points), n_dofs)
     for i in eachindex(sensor_points)
@@ -84,4 +89,29 @@ function evaluate_projection(projection_model::HTTPModel, sensor_points::Vector{
     return result
 end
 
+"""
+    evaluate_fem_residual(residual_model::HTTPModel,u::Vector{T},κ::Vector{T};config::Dict{String,Any}=empty_config()) where {T<: AbstractFloat}
+
+TBW
+"""
+function evaluate_fem_residual(residual_model::HTTPModel, u::Vector{T}, κ::Vector{T}; config::Dict{String, Any} = empty_config()) where {T <: AbstractFloat}
+    return evaluate(residual_model, [u, κ], config)[1][1]
 end
+
+"""
+    evaluate_fem_residual_gradient(residual_model::HTTPModel,u::Vector{T},κ::Vector{T};config::Dict{String,Any}=empty_config()) where {T<:AbstractFloat}
+
+TBW
+"""
+function evaluate_fem_residual_gradient(residual_model::HTTPModel, u::Vector{T}, κ::Vector{T}; config::Dict{String, Any} = empty_config()) where {T <: AbstractFloat}
+    return gradient(
+        residual_model,
+        0,
+        1,
+        [u, κ],
+        [1.0],
+        config
+    )
+end
+
+end #module

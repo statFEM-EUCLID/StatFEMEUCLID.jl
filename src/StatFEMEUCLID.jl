@@ -14,6 +14,7 @@ include("SensorSets.jl")
 @reexport using .SensorSets
 include("StatFEM.jl")
 @reexport using .StatFEM
-
+include("Inverse.jl")
+@reexport using .Inverse
 
 end

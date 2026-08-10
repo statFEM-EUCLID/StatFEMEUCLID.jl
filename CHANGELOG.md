@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [0.2.3] - 2026-08-08
+## [Unreleased]
+
+### Added
+- Handling of residual models in `FEMClient`
+- Submodule `Inverse`
+    - Functionality for model calibration
+    - Functionality for model discovery (EUCLID)
+- Example202 explaining model calibration and discovery
+- `FullFieldSensorSet` 
+
+### Changed
+- Fixed error in generation of synthetic data in Example201 
+- Fixed `draw_FEM_samples` for `solution_index=:`
+
+## [0.2.3] - 2026-08-08
 
 ### Added
 - Result plots for Example201

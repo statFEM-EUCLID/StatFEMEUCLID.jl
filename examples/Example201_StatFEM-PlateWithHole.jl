@@ -261,24 +261,22 @@ function generate_synthetic_data(;
     # Since we solve with the exact mean traction force,
     # we don't have to sample and can directly evaluate the
     # forward model once.
-    u_truth = reshape(
-        evaluate_fem_model(
-            fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
-        ), n_dofs, 2
+    u_truth = evaluate_fem_model(
+        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
     )
 
     # Then, we read in the sensor locations and obtain the projection matrix
     sensor_set = CSV.read("Example201_sensors.csv", EqualSensorSet{Float64}, σ_sensor)
+    n_sen = size(sensor_set)
     calculate_projection_matrix(sensor_set, projection_model, n_dofs)
 
     # and project the solution onto the sensor points
     u_measured = project(sensor_set, u_truth)
 
     # Finally, we apply a Gaussian noise to the projected measurements
-    apply_noise!(sensor_set, u_measured; rng = MersenneTwister(2530))
-
+    apply_noise!(sensor_set, reshape(u_measured, (n_sen, 2)); rng = MersenneTwister(2530))
     # before writing the result to file.
-    dataframe_measurements = DataFrame(u_x = u_measured[:, 1], u_y = u_measured[:, 2])
+    dataframe_measurements = DataFrame(u_x = u_measured[1:n_sen], u_y = u_measured[(n_sen + 1):(2 * n_sen)])
     return CSV.write("Example201_measurements.csv", dataframe_measurements)
 end
 
