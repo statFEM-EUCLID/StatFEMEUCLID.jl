@@ -31,4 +31,18 @@ has at most 3 nonzero basis values, such that the output sizes should be `[3,3]`
 Since it is not necessarily trivial to get this information from a
 specific FEM solver, we also provide an extension based on ExtendableFEM.jl that can calculate $H$ based on a given mesh.
 
-## Residual model (to be written)
+## Residual model
+The residual model evaluates the residual of the DBVP given 
+an FE solution $u_h\in\mathbb{R}^{n_{dof}*d}$ and a set of material parameters $\kappa\in\mathbb{R}$.
+Depending on the application the mean traction $\mu_T$ is either 
+hard coded (as in our Ferrite.jl Holeplate2D) or could be set through the config.
+
+For use within this package the model should have the following parameters
+- inputSizes: 
+    - `[d*n_dofs,k]` , where k can be config dependent
+- outputSizes:
+    - `[1]` 
+- evaluate should be a function that returns the DBVP residual for the given $[u_h,\kappa]$.
+
+When using gradient-based optimizers we recommend to implement the
+residual gradient w.r.t. $\kappa$ in the FEM blackbox (if possible)

@@ -17,7 +17,7 @@ using Optim, LineSearches
 
 export create_residual_objective, create_residual_objective_and_gradient
 export AbstractModelSelectionCriterion, AikaikeInformationCriterion, AIC, BayesianInformationCriterion, BIC, evaluate_criterion
-export InverseModelConfig, EUCLID
+export InverseModelConfig, EUCLID, model_rmse
 
 """
     create_residual_objective(residual_model::HTTPModel, fem_solution::Vector{T}; config::Dict{String, Any} = empty_config()) where {T <: AbstractFloat}
@@ -183,6 +183,7 @@ function EUCLID(
         lasso_sweep::Vector{T},
         κ_0::Vector{T},
         sensor_set::AbstractSensorSet{T},
+        u::Vector{T},
         measurements::Vector{T}
         ;
         optimizer::Optim.AbstractOptimizer = BFGS(linesearch = LineSearches.BackTracking()),
@@ -202,9 +203,9 @@ function EUCLID(
     crit_opt = typemax(T)
 
     f_resid, g_resid! = if (use_gradient)
-        create_residual_objective_and_gradient(model_config.residual_model, measurements; config = model_config.config)
+        create_residual_objective_and_gradient(model_config.residual_model, u; config = model_config.config)
     else
-        create_residual_objective(model_config.residual_model, measurements; config = model_config.config), g_penalty
+        create_residual_objective(model_config.residual_model, u; config = model_config.config), g_penalty
     end
     for λ in lasso_sweep
         f_lasso, g_lasso! = create_lasso_objective_and_gradient(λ, f_resid, g_resid!, f_penalty, g_penalty)

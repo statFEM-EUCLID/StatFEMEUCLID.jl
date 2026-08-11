@@ -11,8 +11,7 @@ through a [UM-Bridge](https://um-bridge-benchmarks.readthedocs.io/en/docs/) inte
 - A high(er)-level interface to UM-Bridge for sampling an FEM black box
 - Construction of PCE surrogates from samples
 - Data assimilation based on the statFEM method, see Example201
-- Parameter identification based on the virtual fields method or EUCLID (WIP: in refactoring)
-
+- Parameter identification based on the virtual fields method/equilibrium gap methods or EUCLID
 
 
 ## License
