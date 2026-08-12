@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Example203StatFEMEUCLIDPlateWithHole · StatFEMEUCLID.jl</title><meta name="title" content="Example203StatFEMEUCLIDPlateWithHole · StatFEMEUCLID.jl"/><meta property="og:title" content="Example203StatFEMEUCLIDPlateWithHole · StatFEMEUCLID.jl"/><meta property="twitter:title" content="Example203StatFEMEUCLIDPlateWithHole · StatFEMEUCLID.jl"/><meta name="description" content="Documentation for StatFEMEUCLID.jl."/><meta property="og:description" content="Documentation for StatFEMEUCLID.jl."/><meta property="twitter:description" content="Documentation for StatFEMEUCLID.jl."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="StatFEMEUCLID.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">StatFEMEUCLID.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../umbridge_interfaces/">UMBridge interfaces</a></li><li><span class="tocitem">Submodules</span><ul><li><a class="tocitem" href="../../submodules/femclient/">FEMClient</a></li><li><a class="tocitem" href="../../submodules/sampling/">Sampling</a></li><li><a class="tocitem" href="../../submodules/pce/">PCE</a></li><li><a class="tocitem" href="../../submodules/sensorsets/">SensorSets</a></li><li><a class="tocitem" href="../../submodules/statfem/">StatFEM</a></li><li><a class="tocitem" href="../../submodules/inverse/">Inverse</a></li></ul></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../Example101_Sampling1DBarUnderTension/">Example101_Sampling1DBarUnderTension</a></li><li><a class="tocitem" href="../Example201_StatFEM-PlateWithHole/">Example201_StatFEM-PlateWithHole</a></li><li><a class="tocitem" href="../Example202_Inverse-PlateWithHole/">Example202_Inverse-PlateWithHole</a></li><li class="is-active"><a class="tocitem" href>Example203<em>StatFEMEUCLID</em>PlateWithHole</a><ul class="internal"><li><a class="tocitem" href="#Results"><span>Results</span></a></li></ul></li></ul></li><li><a class="tocitem" href="../../changelog/">Changelog</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Example203<em>StatFEMEUCLID</em>PlateWithHole</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Example203<em>StatFEMEUCLID</em>PlateWithHole</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/statFEM-EUCLID/StatFEMEUCLID.jl/blob/main/docs/src/module_examples/Example203_StatFEMEUCLID_PlateWithHole.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><p>Copyright (c) 2026 Jan Philipp Thiele SPDX-License-Identifier MIT</p><h1 id="203:-Model-parameter-identification-for-a-2D-Plate-with-a-hole-based-on-sparse-and-noisy-data"><a class="docs-heading-anchor" href="#203:-Model-parameter-identification-for-a-2D-Plate-with-a-hole-based-on-sparse-and-noisy-data">203: Model parameter identification for a 2D Plate with a hole based on sparse and noisy data</a><a id="203:-Model-parameter-identification-for-a-2D-Plate-with-a-hole-based-on-sparse-and-noisy-data-1"></a><a class="docs-heading-anchor-permalink" href="#203:-Model-parameter-identification-for-a-2D-Plate-with-a-hole-based-on-sparse-and-noisy-data" title="Permalink"></a></h1><p>(<a href="../Example203_StatFEMEUCLID_PlateWithHole.jl">source code</a>)</p><p>In this example we combine the two previous examples, i.e. the data assimilation from 201 with the model parameter identification of example 202. The goal is to re-identify a known truth that was used to generate synthetic data. The main difference to 202 is that the synthetic data is only measured at a few distinct sensor locations and that additional measurement noise is applied to it.</p><p>A single loop of the full algorithm works as follows;</p><ul><li>given a current guess <span>$\kappa^t$</span> sample and compute a PCE surrogate <span>$u_f^t$</span></li><li>if <span>$\text{RMSE}(u_f^t,y) &lt; TOL$</span> we have found a suitable model <span>$\kappa^*=\kappa^t$</span>, finish</li><li>if not, assimilate posterior state <span>$u_a^t$</span> using StatFEM</li><li>Identify model parameters <span>$\kappa^{t+1}$</span> based on <span>$u_a^t$</span> (calibration or discovery)</li><li>If maximum number of iterations is reached, abort. Else, redo loop with <span>$\kappa^{t+1}$</span>.</li></ul><p>As before we have two options for identifying the model</p><ul><li>StatFEM-VFM-EGM, using calibration internally</li><li>StatFEM-EUCLID, using discovery internally</li></ul><p>The following figure shows the 38 sensor locations on the mesh <img src="../../assets/examples/203_sensor_locations.png" alt/></p><h2 id="Results"><a class="docs-heading-anchor" href="#Results">Results</a><a id="Results-1"></a><a class="docs-heading-anchor-permalink" href="#Results" title="Permalink"></a></h2><p>For both algorithms we want to look at the convergence of the three nonzero parameters to the true values as well as the convergence of the RMSE between the</p><h3 id="StatFEM-VFM-EGM"><a class="docs-heading-anchor" href="#StatFEM-VFM-EGM">StatFEM-VFM-EGM</a><a id="StatFEM-VFM-EGM-1"></a><a class="docs-heading-anchor-permalink" href="#StatFEM-VFM-EGM" title="Permalink"></a></h3><p><img src="../../assets/examples/203_statfem_vfm_egm_parameter_convergence.png" alt/></p><p><img src="../../assets/examples/203_statfem_vfm_egm_rmse_convergence.png" alt/></p><h3 id="StatFEM-EUCLID"><a class="docs-heading-anchor" href="#StatFEM-EUCLID">StatFEM-EUCLID</a><a id="StatFEM-EUCLID-1"></a><a class="docs-heading-anchor-permalink" href="#StatFEM-EUCLID" title="Permalink"></a></h3><p><img src="../../assets/examples/203_statfem_euclid_parameter_convergence.png" alt/></p><p><img src="../../assets/examples/203_statfem_euclid_rmse_convergence.png" alt/></p><div class="admonition is-warning" id="Important-5e95e4930423de38"><header class="admonition-header">Important<a class="admonition-anchor" href="#Important-5e95e4930423de38" title="Permalink"></a></header><div class="admonition-body"><p>Remember to start your UMBridge FEM server before running the example!</p></div></div><pre><code class="language-julia hljs">module Example203_StaFEM_EUCLID_PlateWithHole
+
+using StatFEMEUCLID
+using Random
+using Distributions
+using CairoMakie
+using Gmsh
+using PolyChaos
+using ExtendableGrids
+using GridVisualize
+using CSV, DataFrames
+using Optim
+using UMBridge
+using LineSearches
+using LinearAlgebra</code></pre><p>With <code>server_url</code> you can point to a different UMBridge server implementing the model the default is what is provided by the Ferrite.jl-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/">here</a></p><pre><code class="language-julia hljs">function main(;
+        μ_F = 0.5,
+        σ_F = 2.5e-2,
+        n_PCE = 30,
+        E = 2.7,
+        ν = 0.35,
+        σ_sensor = 0.001,
+        server_url = &quot;http://localhost:4232&quot;
+    )
+    rng = MersenneTwister(2530)  #fixed seed for comparability between runs</code></pre><p>As before we define our UMBrige models</p><pre><code class="language-julia hljs">    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)
+    residual_model = UMBridge.HTTPModel(model_name * &quot;.residual&quot;, server_url)
+    projection_model = UMBridge.HTTPModel(model_name * &quot;.projection&quot;, server_url)</code></pre><p>Read in the sensors, grid and (synthetic) measurements</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example203_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)
+    n_dofs = UMBridge.model_output_sizes(fem_model)[1]
+    calculate_projection_matrix(sensor_set, projection_model, n_dofs)
+
+    grid = ExtendableGrids.simplexgrid_from_gmsh(&quot;Example201_mesh.msh&quot;, Tc = Float64, Ti = Int64)
+
+    dataframe_measurements = CSV.read(&quot;Example203_measurements.csv&quot;, DataFrame)
+    measurements = [Vector{Float64}(row) for row in eachrow(dataframe_measurements)]
+    n_sen = length(measurements)</code></pre><p>Measurements are stored as u<em>x, u</em>y so we need to reorder them to be a single vector</p><pre><code class="language-julia hljs">    u_measurements = zeros(2 * n_sen)
+    for i in eachindex(measurements)
+        u_measurements[i] = measurements[i][1]
+        u_measurements[n_sen + i] = measurements[i][2]
+    end</code></pre><p>Setup for <code>StatFEM_VFM_EGM</code> and <code>StatFEM_EUCLID</code> is practically identical</p><p>Define κ<em>true for plotting and κ</em>0 as initial guess</p><pre><code class="language-julia hljs">    κ_true_vfm = [0.3, 0.2, 1.5]
+    κ_0_vfm_egm = [0.12, 0.12, 0.72]</code></pre><p>Combine HTTPModel information in InverseModelConfig struct VFM-EGM uses calibration, so the known model with n<em>MR=1 and n</em>VOL=1</p><pre><code class="language-julia hljs">    vfm_egm_config = InverseModelConfig(
+        fem_model, residual_model,
+        Dict{String, Any}(
+            &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+            &quot;n_MR&quot; =&gt; 1,
+            &quot;n_VOL&quot; =&gt; 1
+        ),
+        μ_F
+    )</code></pre><p>Run StatFEM<em>VFM</em>EGM as defined below</p><pre><code class="language-julia hljs">    i_ve, κ_history_ve, rmse_history_ve = StatFEM_VFM_EGM(
+        vfm_egm_config, κ_0_vfm_egm, sensor_set, u_measurements,
+        rng = rng, sample_distribution = Normal(μ_F, σ_F)
+    )</code></pre><p>Define κ<em>true for plotting and κ</em>0 as initial guess</p><pre><code class="language-julia hljs">    κ_true_euclid = [0.3, 0.2, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5]
+    κ_0_euclid = [0.4, 0.4, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 6.3]</code></pre><p>Combine HTTPModel information in InverseModelConfig struct VFM-EGM uses discovery, so the larger model with n<em>MR=3 and n</em>VOL=1</p><pre><code class="language-julia hljs">    euclid_config = InverseModelConfig(
+        fem_model, residual_model,
+        Dict{String, Any}(
+            &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+            &quot;n_MR&quot; =&gt; 3,
+            &quot;n_VOL&quot; =&gt; 1
+        ),
+        μ_F
+    )</code></pre><p>Run StatFEM_EUCLID as defined below</p><pre><code class="language-julia hljs">    i_euclid, κ_history_euclid, rmse_history_euclid = StatFEM_EUCLID(
+        euclid_config, κ_0_euclid, sensor_set, u_measurements,
+        rng = rng, sample_distribution = Normal(μ_F, σ_F)
+    )</code></pre><p>Generate all the plots that we want to return</p><pre><code class="language-julia hljs">    fig_vfm_param = plot_vfm_parameters(i_ve, κ_history_ve, κ_true_vfm)
+    fig_vfm_rmse = plot_rmse(i_ve, rmse_history_ve)
+    fig_euclid_param = plot_euclid_parameters(i_euclid, κ_history_euclid, κ_true_euclid)
+    fig_euclid_rmse = plot_rmse(i_euclid, rmse_history_euclid)
+    sensorvis = plot_sensors(grid, sensor_set.locations)
+
+    return fig_vfm_param, fig_vfm_rmse, fig_euclid_param, fig_euclid_rmse, sensorvis
+end</code></pre><p>As in Example202 we want to penalize the larger model to get a compressible material</p><pre><code class="language-julia hljs">function MooneyRivlin_penalization(penalty_multiplier, penalization_weight)
+    function f(κ)
+        return abs(sum(κ[1:(end - 1)]) * penalty_multiplier - κ[end]) * penalization_weight
+    end
+    function g!(G, κ)
+        s = sign(sum(κ[1:(end - 1)] * penalty_multiplier) - κ[end])
+        G[1:(end - 1)] .+= penalization_weight * penalty_multiplier * s
+        return G[end] -= penalization_weight * s
+    end
+
+    return f, g!
+end
+
+function StatFEM_VFM_EGM(
+        config::InverseModelConfig, κ_0, sensor_set, u_measurements;
+        optimizer = Fminbox(BFGS(linesearch = BackTracking())),
+        optimizer_options = Optim.Options(), maxiter = 10, n_PCE = 50, rng = default_rng(), sample_distribution = Normal(0.0, 1.0), TOL = 1.0e-4
+    )
+
+    @info &quot;StatFEM_VFM_EGM&quot;
+
+    #allocate intermediate and result vectors
+    κ_history = zeros(maxiter, length(κ_0))
+    rmse_history = zeros(maxiter)
+    κ_t = deepcopy(κ_0)
+    n_dofs = UMBridge.model_output_sizes(config.fem_model)[1]
+    n_sen = size(sensor_set)
+    u_a = zeros(2 * n_dofs)
+
+
+    lower = zeros(length(κ_t))
+    upper = 10.0 * ones(length(κ_t))
+
+    i = 1
+    while (true)
+        @info &quot;Starting iteration $i&quot;</code></pre><p>As described above we start by sampling and constructing a PCE surrogate (Example101)</p><pre><code class="language-julia hljs">        prior_sample = sample_FEM(
+            config.fem_model,
+            n_PCE,
+            sample_distribution = sample_distribution,
+            rng = rng,
+            config = config.config,
+            extra_params = κ_t,
+            solution_index = :
+        )
+
+        pce_surrogate = PolyChaosExpansion(prior_sample, polynomials = GaussOrthoPoly(4))
+        μ_u_f = mean(pce_surrogate)</code></pre><p>Check if the mean displacements of the surrogate are close enough to the measurements</p><pre><code class="language-julia hljs">        κ_history[i, :] = κ_t
+        rmse_history[i] = model_rmse(μ_u_f, sensor_set, u_measurements)
+        @info rmse_history[i]
+        if (rmse_history[i] &lt; TOL)
+            @info &quot;Found sufficient model with RMSE=&quot; rmse_history[i]
+            return i, κ_history, rmse_history
+        end</code></pre><p>or if maxiter was reached</p><pre><code class="language-julia hljs">        if i == maxiter
+            @info &quot;Reached maximum number of iterations, aborting&quot;
+            return i, κ_history, rmse_history
+        end</code></pre><p>Take the u<em>x and u</em>y subviews of the PCE to calculate the StatFEM posterior (Example 201)</p><pre><code class="language-julia hljs">        pce_surrogate_x = PolyChaosExpansion(pce_surrogate.coefficients[:, 1:n_dofs], pce_surrogate.orthogonal_polynomials)
+        pce_surrogate_y = PolyChaosExpansion(pce_surrogate.coefficients[:, (n_dofs + 1):(2 * n_dofs)], pce_surrogate.orthogonal_polynomials)
+
+        u_a[1:n_dofs] = posterior_mean(sensor_set, u_measurements[1:n_sen], pce_surrogate_x)
+        u_a[(n_dofs + 1):(2 * n_dofs)] = posterior_mean(sensor_set, u_measurements[(n_sen + 1):(2 * n_sen)], pce_surrogate_y)</code></pre><p>As in Example 202 compute next κ_t through calibration</p><pre><code class="language-julia hljs">        f_cal, g_cal! = create_residual_objective_and_gradient(config.residual_model, u_a; config = config.config)
+        optimal_residual = optimize(f_cal, g_cal!, lower, upper, κ_t, optimizer, optimizer_options)
+        κ_t = Optim.minimizer(optimal_residual)
+
+        @show κ_t
+        i += 1
+    end
+    return
+end
+
+
+function StatFEM_EUCLID(config::InverseModelConfig, κ_0, sensor_set, u_measurements; optimizer = Fminbox(BFGS(linesearch = BackTracking())), optimizer_options = Optim.Options(time_limit = 200), maxiter = 10, n_PCE = 50, rng = default_rng(), sample_distribution = Normal(0.0, 1.0), TOL = 1.0e-4)
+    @info &quot;StatFEM_EUCLID&quot;
+
+    κ_history = zeros(maxiter, length(κ_0))
+    rmse_history = zeros(maxiter)
+    κ_t = deepcopy(κ_0)
+    n_dofs = UMBridge.model_output_sizes(config.fem_model)[1]
+    n_sen = size(sensor_set)
+    u_a = zeros(2 * n_dofs)
+
+    lower = zeros(length(κ_t))
+    upper = 10.0 * ones(length(κ_t))</code></pre><p>For EUCLID we also need to define the lasso sweep and get the penalty function and gradient</p><pre><code class="language-julia hljs">    lasso_sweep = 5 * logrange(1.0e-5, 1.0, 6)
+    f_mr_penalty, g_mr_penalty! = MooneyRivlin_penalization(3.0, 10.0)
+
+    i = 1</code></pre><p>Apart from the model identification the loop is identical to the one in StatFEM<em>VFM</em>EGM</p><pre><code class="language-julia hljs">    while (true)
+        @info &quot;Starting iteration $i&quot;
+        prior_sample = sample_FEM(
+            config.fem_model,
+            n_PCE,
+            sample_distribution = sample_distribution,
+            rng = rng,
+            config = config.config,
+            extra_params = κ_t,
+            solution_index = :
+        )</code></pre><p>Sample and construct PCE surrogate</p><pre><code class="language-julia hljs">        pce_surrogate = PolyChaosExpansion(prior_sample, polynomials = GaussOrthoPoly(4))
+        μ_u_f = mean(pce_surrogate)</code></pre><p>Check if the mean displacements of the surrogate are close enough to the measurements</p><pre><code class="language-julia hljs">        κ_history[i, :] = κ_t
+        rmse_history[i] = model_rmse(μ_u_f, sensor_set, u_measurements)
+        @info rmse_history[i]
+        if (rmse_history[i] &lt; TOL)
+            @info &quot;Found sufficient model with RMSE=&quot; rmse_history[i]
+            return i, κ_history, rmse_history
+        end</code></pre><p>or if maxiter was reached</p><pre><code class="language-julia hljs">        if i == maxiter
+            @info &quot;Reached maximum number of iterations, aborting&quot;
+            return i, κ_history, rmse_history
+        end</code></pre><p>Take the u<em>x and u</em>y subviews of the PCE to calculate the StatFEM posterior (Example 201)</p><pre><code class="language-julia hljs">        pce_surrogate_x = PolyChaosExpansion(pce_surrogate.coefficients[:, 1:n_dofs], pce_surrogate.orthogonal_polynomials)
+        pce_surrogate_y = PolyChaosExpansion(pce_surrogate.coefficients[:, (n_dofs + 1):(2 * n_dofs)], pce_surrogate.orthogonal_polynomials)
+
+        u_a[1:n_dofs] = posterior_mean(sensor_set, u_measurements[1:n_sen], pce_surrogate_x)
+        u_a[(n_dofs + 1):(2 * n_dofs)] = posterior_mean(sensor_set, u_measurements[(n_sen + 1):(2 * n_sen)], pce_surrogate_y)</code></pre><p>As in example 202 compute next κ_t through discovery/EUCLID</p><pre><code class="language-julia hljs">        κ_t, _ = EUCLID(
+            config, lasso_sweep, κ_t, sensor_set, u_a, u_measurements,
+            f_penalty = f_mr_penalty, g_penalty = g_mr_penalty!,
+            upper = upper, lower = lower,
+            show_info = false, use_gradient = true,
+            optimizer = optimizer,
+            optimizer_options = optimizer_options
+        )
+
+        @show κ_t
+        i += 1
+    end
+    return
+end
+
+function plot_vfm_parameters(i, κ_history, κ_true)
+    fig = Figure()
+
+    ax_A10 = Axis(fig[1, 1], ylabel = L&quot;A_{10}&quot;)
+    ax_A01 = Axis(fig[2, 1], ylabel = L&quot;A_{01}&quot;)
+    ax_B1 = Axis(fig[3, 1], ylabel = L&quot;B_1&quot;, xlabel = &quot;Iteration&quot;)
+
+    lines!(ax_A10, 1:i, κ_history[1:i, 1], color = :blue, label = L&quot;\kappa_\text{VFM}&quot;)
+    lines!(ax_A01, 1:i, κ_history[1:i, 2], color = :blue)
+    lines!(ax_B1, 1:i, κ_history[1:i, 3], color = :blue)
+    lines!(ax_A10, [1, i], [κ_true[1], κ_true[1]], color = :black, linestyle = :dashdot, label = L&quot;\kappa_\text{true}&quot;)
+    lines!(ax_A01, [1, i], [κ_true[2], κ_true[2]], color = :black, linestyle = :dashdot)
+    lines!(ax_B1, [1, i], [κ_true[3], κ_true[3]], color = :black, linestyle = :dashdot)
+
+
+    fig[0, :] = Legend(fig, ax_A10, &quot;Parameter convergence&quot;, orientation = :horizontal)
+
+
+    return fig
+end
+
+function plot_euclid_parameters(i, κ_history, κ_true)
+    fig = Figure()
+
+    ax_A10 = Axis(fig[1, 1], ylabel = L&quot;A_{10}&quot;)
+    ax_A01 = Axis(fig[2, 1], ylabel = L&quot;A_{01}&quot;)
+    ax_B1 = Axis(fig[3, 1], ylabel = L&quot;B_1&quot;, xlabel = &quot;Iteration&quot;)
+
+    lines!(ax_A10, 1:i, κ_history[1:i, 1], color = :blue, label = L&quot;\kappa_\text{EUCLID}&quot;)
+    lines!(ax_A01, 1:i, κ_history[1:i, 2], color = :blue)
+    lines!(ax_B1, 1:i, κ_history[1:i, 10], color = :blue)
+    lines!(ax_A10, [1, i], [κ_true[1], κ_true[1]], color = :black, linestyle = :dashdot, label = L&quot;\kappa_\text{true}&quot;)
+    lines!(ax_A01, [1, i], [κ_true[2], κ_true[2]], color = :black, linestyle = :dashdot)
+    lines!(ax_B1, [1, i], [κ_true[10], κ_true[10]], color = :black, linestyle = :dashdot)
+
+
+    fig[0, :] = Legend(fig, ax_A10, &quot;Parameter convergence&quot;, orientation = :horizontal)
+
+
+    return fig
+end
+
+function plot_rmse(i, rmse_history)
+    fig = Figure()
+
+    ax = Axis(fig[1, 1], yscale = log10, ylabel = &quot;RMSE&quot;, xlabel = &quot;Iteration&quot;, title = &quot;RMSE convergence&quot;)
+
+    lines!(ax, 1:i, rmse_history[1:i], color = :blue)
+
+
+    return fig
+end</code></pre><p>This function generates the synthetic data based on a Mooney-Rivlin model. Note that the forward model has to be able to solve with this material model to regenerate the data. The data in the repository has been generated using the default, i.e. the Ferrite.jl-based implementation <a href="https://github.com/statFEM-EUCLID/HolePlate2D_Ferrite.jl/">here</a></p><pre><code class="language-julia hljs">function generate_synthetic_data(;
+        F = 0.5,
+        σ_sensor = 0.001,
+        server_url = &quot;http://localhost:4232&quot;
+    )</code></pre><p>Note that we also need the projection model here since we want to map the FEM solution to the given sensor points.</p><pre><code class="language-julia hljs">    model_name = &quot;HolePlate2D&quot;
+    fem_model = UMBridge.HTTPModel(model_name * &quot;.FEM&quot;, server_url)
+    projection_model = UMBridge.HTTPModel(model_name * &quot;.projection&quot;, server_url)
+
+    A_10 = 0.3
+    A_01 = 0.2
+    B_1 = 1.5
+
+    κ = [A_10, A_01, B_1]</code></pre><p>We want to solve with the smallest Mooney-Rivlin model with a total of three parameters</p><pre><code class="language-julia hljs">    MR_material_config = Dict{String, Any}(
+        &quot;material&quot; =&gt; &quot;MooneyRivlin&quot;,
+        &quot;n_MR&quot; =&gt; 1,
+        &quot;n_VOL&quot; =&gt; 1
+    )
+    n_dofs = UMBridge.model_output_sizes(fem_model)[1]</code></pre><p>Since we solve with the exact mean traction force, we don&#39;t have to sample and can directly evaluate the forward model once.</p><pre><code class="language-julia hljs">    u_truth = evaluate_fem_model(
+        fem_model, F, solution_index = :, config = MR_material_config, extra_params = κ
+    )</code></pre><p>Then, we read in the sensor locations and obtain the projection matrix</p><pre><code class="language-julia hljs">    sensor_set = CSV.read(&quot;Example203_sensors.csv&quot;, EqualSensorSet{Float64}, σ_sensor)
+    n_sen = size(sensor_set)
+    calculate_projection_matrix(sensor_set, projection_model, n_dofs)</code></pre><p>and project the solution onto the sensor points</p><pre><code class="language-julia hljs">    u_measured = project(sensor_set, u_truth)</code></pre><p>Finally, we apply a Gaussian noise to the projected measurements</p><pre><code class="language-julia hljs">    apply_noise!(sensor_set, reshape(u_measured, (n_sen, 2)); rng = MersenneTwister(2530))</code></pre><p>before writing the result to file.</p><pre><code class="language-julia hljs">    dataframe_measurements = DataFrame(u_x = u_measured[1:n_sen], u_y = u_measured[(n_sen + 1):(2 * n_sen)])
+    return CSV.write(&quot;Example203_measurements.csv&quot;, dataframe_measurements)
+end</code></pre><p>Plot the underlying grid as well as the sensor points</p><pre><code class="language-julia hljs">function plot_sensors(grid, sensor_points::Vector{Vector{Float64}})
+
+    sensorvis = GridVisualizer(; Plotter = CairoMakie)
+
+    gridplot!(sensorvis, grid, show_colorbar = false)
+    x = zeros(length(sensor_points))
+    y = zeros(length(sensor_points))
+    for i in eachindex(sensor_points)
+        x[i] = sensor_points[i][1]
+        y[i] = sensor_points[i][2]
+    end
+    customplot!(sensorvis) do ax
+        CairoMakie.scatter!(ax, x, y, color = :gold, markersize = 15)
+    end
+    return sensorvis
+end
+
+#The following functions override the default behaviour of GridVisualizeTools
+#to remove coloring of cells and boundaries from the sensor plot.
+using Colors
+import GridVisualizeTools: region_cmap, bregion_cmap
+function region_cmap(n)
+    return fill(RGB(1.0, 1.0, 1.0), n)
+end
+
+function bregion_cmap(n)
+    return fill(RGBA(0.0, 0.0, 0.0, 0.0), n)
+end
+
+end</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../Example202_Inverse-PlateWithHole/">« Example202_Inverse-PlateWithHole</a><a class="docs-footer-nextpage" href="../../changelog/">Changelog »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Wednesday 12 August 2026 20:30">Wednesday 12 August 2026</span>. Using Julia version 1.12.6.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
