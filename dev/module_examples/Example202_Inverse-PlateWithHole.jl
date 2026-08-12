@@ -160,12 +160,12 @@ function main(;
 
 
     @info "EUCLID with BFGS"
-    EUCLID(euclid_config, lasso_sweep, κ_0_disc, sensor_set, u_measurements, f_penalty = f_mr_penalty, g_penalty = g_mr_penalty!, show_info = true, use_gradient = true)
+    EUCLID(euclid_config, lasso_sweep, κ_0_disc, sensor_set, u_measurements, u_measurements, f_penalty = f_mr_penalty, g_penalty = g_mr_penalty!, show_info = true, use_gradient = true)
 
     #= The following EUCLID calls are all commented out because they take significantly longer.
 
     @info "EUCLID with NelderMead"
-    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,u_measurements,
     f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
     show_info=true,use_gradient=false,
     optimizer=NelderMead(),
@@ -176,7 +176,7 @@ function main(;
 
 
     @info "EUCLID with Fminbox NelderMead"
-    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,u_measurements,
     f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
     upper=upper,lower=lower,
     show_info=true,use_gradient=false,
@@ -184,7 +184,7 @@ function main(;
     optimizer_options=Optim.Options(time_limit=200))
 
     @info "EUCLID with Fminbox BFGS"
-    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,
+    EUCLID(euclid_config,lasso_sweep,κ_0_disc,sensor_set,u_measurements,u_measurements,
         f_penalty=f_mr_penalty,g_penalty=g_mr_penalty!,
         upper=upper,lower=lower,
         show_info=true,use_gradient=true,
