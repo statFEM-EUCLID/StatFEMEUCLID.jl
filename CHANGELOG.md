@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0]
+
 ### Breaking
-- Added missing argument `u` to `EUCLID` since it coincides with the measurements for the simple case
+- Added missing argument `u` to `EUCLID` since it coincided with the measurements for the simple case
 
 ### Added
 - Example to show how the full StatFEM-EUCLID algorithm works
