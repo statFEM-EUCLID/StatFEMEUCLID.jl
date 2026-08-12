@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+- Added missing argument `u` to `EUCLID` since it coincides with the measurements for the simple case
+
+### Added
+- Example to show how the full StatFEM-EUCLID algorithm works
+- This Changelog to docs
+
+### Changed
+- Fixed argument error in `StatFEM.posterior_mean`
+
+
 ## [0.2.4] - 2026-08-10
 
 ### Added

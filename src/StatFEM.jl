@@ -95,7 +95,7 @@ end
 Calculate the posterior mean of a PCE based prior given a `sensor_set` and a single measurement.
 """
 function posterior_mean(sensor_set::AbstractSensorSet{T}, measurements::AbstractVector{T}, pce) where {T}
-    return posterior_mean(sensor_set, reshape(A, (length(A), 1)), pce)
+    return posterior_mean(sensor_set, reshape(measurements, (length(measurements), 1)), pce)
 end
 
 """
