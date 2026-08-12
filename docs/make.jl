@@ -43,6 +43,7 @@ function make_all(; with_examples::Bool = false, modules = :all, run_examples::B
                 "Inverse" => "submodules/inverse.md"
             ]
             "Examples" => module_examples
+            "Changelog" => "changelog.md"
         ],
     )
 

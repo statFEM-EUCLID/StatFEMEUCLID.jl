@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Example to show how the full StatFEM-EUCLID algorithm works
+- This Changelog to docs
 
 ### Changed
 - Fixed argument error in `StatFEM.posterior_mean`
